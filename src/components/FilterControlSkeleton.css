@@ -1,0 +1,6 @@
+.filter-container-skeleton > * {
+  background-color: var(--skeleton-bg);
+  animation: var(--skeleton-animation);
+  width: 4.5em;
+  height: 2em;
+}

@@ -1,0 +1,20 @@
+.product-skeleton *:not(:last-child, :first-child) {
+  background-color: var(--skeleton-bg);
+  animation: var(--skeleton-animation);
+}
+.product-skeleton :first-child {
+  height: 1em;
+}
+.product-skeleton .product__name {
+  position: relative;
+  width: calc(100% - 4em);
+  height: 1em;
+}
+.product-skeleton .product__name::after {
+  position: absolute;
+  content: '';
+  width: 20%;
+  height: inherit;
+  bottom: -1.3em;
+  left: 0;
+}
