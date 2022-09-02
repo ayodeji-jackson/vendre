@@ -10,6 +10,21 @@ header > * {
 header button.open-search {
   display: none;
 }
+form.form-search {
+  position: absolute;
+  left: 0;
+  top: 1px;
+  width: 9rem;
+  transition: transform .3s linear;
+}
+form.form-search > input {
+  border: var(--border);
+  background-color: white;
+  padding: .5em 1em;
+  width: 100%;
+  border-radius: .3em;
+  box-shadow: var(--shadow);
+}
 header .info {
   font-size: inherit;
   font-weight: normal;
@@ -50,6 +65,27 @@ header button.open-menu::after {
   width: 1.5em;
   background-color: black;
 }
+.menu {
+  position: fixed;
+  width: clamp(35vw, 27rem, 100vw);
+  background-color: white;
+  height: 100vh;
+  z-index: 2;
+  right: 0;
+  box-shadow: var(--shadow);
+  transition: transform .3s linear;
+}
+.menu > li > a {
+  display: flex;
+  align-items: center;
+  gap: .5em;
+}
+.menu svg {
+  width: 1.1em;
+}
+.menu svg > path {
+  fill: inherit;
+}
 header button.open-cart {
   position: relative;
   width: 5em;
@@ -66,6 +102,9 @@ span.cart-count {
   border-radius: 50%;
   height: 1.5em;
   width: 1.5em;
+}
+.anchor {
+  position: fixed;
 }
 @media screen and (min-width: 18.5em) {
   header {

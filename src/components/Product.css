@@ -1,0 +1,19 @@
+.product__amount-in-cart-control {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+.product__amount-in-cart-control button {
+  font-size: 1.5rem;
+  padding: .2em .5em;
+  background-color: var(--color);
+  color: white;
+  border-radius: .2em;
+  box-shadow: var(--shadow);
+}
+.product__amount-in-cart-control button:hover {
+  opacity: .9;
+}
+.product__amount-in-cart-control button:disabled {
+  opacity: .6;
+}

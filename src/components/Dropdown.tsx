@@ -8,6 +8,7 @@ import {
   ItemIndicator } from "@radix-ui/react-dropdown-menu";
 import { AngleIcon, DotIcon } from '../assets/icons';
 import { itemIndicatorStyles, radioItemStyles } from "../assets/styles";
+import './Dropdown.css';
 
 type DropdownMenuItemType = {
   name: string,

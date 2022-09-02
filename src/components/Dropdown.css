@@ -1,0 +1,19 @@
+.dropdown__button {
+  gap: .5em;
+}
+.dropdown__button svg {
+  width: 1.1em;
+}
+.dropdown__body {
+  width: max-content;
+  max-height: 20em;
+  overflow: auto;
+}
+.dropdown__body .button {
+  width: 100%;
+  text-align: left;
+  margin-left: 2px;
+}
+.dropdown__body svg {
+  width: 1em;
+}

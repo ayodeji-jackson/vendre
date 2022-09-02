@@ -7,33 +7,6 @@
   border-bottom: var(--border);
   align-items: center;
 }
-.dropdown__button {
-  gap: .5em;
-}
-.dropdown__button svg {
-  width: 1.1em;
-}
-.dropdown__body {
-  width: max-content;
-  max-height: 20em;
-  overflow: auto;
-}
-.dropdown__body .button {
-  width: 100%;
-  text-align: left;
-  margin-left: 2px;
-}
-.dropdown__body svg {
-  width: 1em;
-}
-.overlay {
-  position: absolute;
-  background-color: white;
-  border: var(--border);
-  box-shadow: .2em .2em .5em rgba(230, 230, 230, 0.6);
-  padding: 1em;
-  border-radius: 1em;
-}
 div.more-filters {
   left: 2.3em;
   top: 5em;
@@ -41,6 +14,7 @@ div.more-filters {
   flex-direction: column;
   align-items: flex-start;
   font-size: .9rem;
+  width: min-content;
 }
 label.price-range {
   display: flex;
@@ -54,6 +28,11 @@ label.price-range .range-input {
 @media screen and (min-width: 18.5em) {
   div.more-filters {
     top: 4em;
+  }
+}
+@media screen and (min-width: 26.75em) {
+  div.more-filters {
+    width: initial;
   }
 }
 @media screen and (min-width: 48em) {

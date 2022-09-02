@@ -1,9 +1,6 @@
-.product-skeleton *:not(:last-child, :first-child) {
+.product-skeleton *, .product-skeleton *::after {
   background-color: var(--skeleton-bg);
   animation: var(--skeleton-animation);
-}
-.product-skeleton :first-child {
-  height: 1em;
 }
 .product-skeleton .product__name {
   position: relative;

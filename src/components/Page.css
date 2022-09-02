@@ -1,0 +1,102 @@
+main {
+  padding: 2em;
+}
+main .product-container {
+  display: grid;
+  gap: 1em 1.5em;
+  grid-template-columns: 1fr;
+}
+main .heading {
+  font-size: 1.5rem;
+  height: auto;
+  margin-bottom: 1em;
+}
+main .product {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  padding: 1em 0;
+  border: var(--border);
+  height: 25em;
+}
+main .product > * {
+  margin: 0 1em;
+}
+main .product__add-to-wishlist {
+  --size: 1.8rem;
+  height: var(--size);
+  width: var(--size);
+  border-radius: 50%;
+  border: var(--border);
+}
+main .product__add-to-wishlist:hover {
+  background-color: none;
+}
+main .product__add-to-wishlist > svg {
+  width: calc(var(--size) / 2);
+}
+main .product__add-to-wishlist.is-liked > svg {
+  animation: .3s like;
+}
+main .product__add-to-wishlist > svg > path {
+  stroke: silver;
+}
+main .product__add-to-wishlist.is-liked > svg > path {
+  fill: red;
+  stroke: red;
+  transition: .3s linear fill, 
+    .3s linear stroke;
+}
+main .product__image {
+  display: block;
+  max-width: 100%;
+  margin: 0;
+  height: 60%;
+}
+main .product-end {
+  --color: #bc7d40;
+  color: var(--color);
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+main .product__price {
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+@media screen and (min-width: 32.5em) {
+  main .product-container {
+    grid-template-columns: 1fr 1fr;
+  }
+  main .product:nth-child(2n) {
+    margin-top: -3em; /* layout hack */
+  }
+}
+@media screen and (min-width: 48em) {
+  main {
+    --padding: calc(.5em + 5vw);
+    padding-left: var(--padding);
+    padding-right: var(--padding);
+  }
+  main .product-container {
+    grid-template-columns: repeat(auto-fit, minmax(20em, 1fr));
+  }
+  main .product__add-to-wishlist {
+    --size: 2.5rem;
+  }
+  main .product {
+    width: 20em;
+    border: none;
+  }
+  main .heading {
+    width: 100%;
+  }
+  main .product:nth-child(2n) {
+    margin-top: 0; /* reset hack */
+  }
+}
+@keyframes like {
+  50% { transform: scale(.8); }
+}

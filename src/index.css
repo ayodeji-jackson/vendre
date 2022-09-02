@@ -4,6 +4,7 @@
   --border: 1px solid silver;
   --skeleton-bg: rgb(143, 143, 143);
   --skeleton-animation: 2s pulsate ease infinite;
+  --shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
 }
 *, ::before, ::after {
   box-sizing: inherit;
@@ -11,16 +12,18 @@
   font-size: inherit;
   padding: 0;
   margin: 0;
-  background-color: inherit;
+  background-color: transparent;
   border: none;
-  cursor: default;
   color: inherit;
   text-decoration: none;
+}
+h1, h2, h3, h4, h5, h6, p {
+  cursor: default;
 }
 ul {
   list-style-type: none;
 }
-a, button, button *, ::before, ::after {
+a {
   cursor: pointer;
 }
 a {
@@ -42,13 +45,9 @@ a:hover::after, a:focus::after {
 }
 button {
   font-size: .9rem;
-  transition: .2s linear background-color;
 }
-button:hover, button:focus {
-  background-color: rgba(230, 230, 230, 0.3);
-}
-button:active {
-  background-color:rgba(160, 160, 160, 0.3)
+:where(button:hover, button:focus) {
+  background-color: rgba(221, 221, 221, 0.3);
 }
 button > span.icon {
   font-size: 1.5rem;
@@ -70,6 +69,13 @@ button > span.icon {
 .button {
   border-radius: .5em;
   padding: .5em;
+}
+.overlay {
+  position: absolute;
+  background-color: white;
+  padding: 1em;
+  border-radius: 1em;
+  box-shadow: var(--shadow);
 }
 svg {
   width: 1.5rem;

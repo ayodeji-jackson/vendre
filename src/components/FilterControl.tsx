@@ -12,7 +12,7 @@ type FilterControlProps = {
  };
 
 const FilterControl = ({ categories, brands, minPrice, maxPrice }: FilterControlProps) => {
-  const [ isExpanded, setIsExpanded ] = useState(false);
+  const [ isExpanded, setExpanded ] = useState(false);
   const [ categorySort, setCategorySort ] = useState('');
   const [ rangeSort, setRangeSort ] = useState([ minPrice, maxPrice ]);
   const [ brandSort, setBrandSort ] = useState('');
@@ -27,7 +27,7 @@ const FilterControl = ({ categories, brands, minPrice, maxPrice }: FilterControl
   
   return (
   <form className="filter-container">
-    <button onClick={ () => setIsExpanded(!isExpanded) } 
+    <button onClick={ () => setExpanded(!isExpanded) } 
       className='centered button' type="button"
     >
       { isExpanded ? 'Close' : 'Open' } filter 
@@ -36,7 +36,7 @@ const FilterControl = ({ categories, brands, minPrice, maxPrice }: FilterControl
     <div className={ `more-filters overlay ${isExpanded ? '' : 'is-closed'}` }>
       <Dropdown name="Categories" onValueChange={ setCategorySort } value={ categorySort }
         items={ categories.map(category => {
-          return { name: category[0].toUpperCase() + category.slice(1), value: category }
+          return { name: capitalize(category), value: category }
         }) 
         } 
       />
@@ -55,7 +55,7 @@ const FilterControl = ({ categories, brands, minPrice, maxPrice }: FilterControl
       </label>
       <Dropdown name="Brand" onValueChange={ setBrandSort } value={ brandSort }
         items={ brands.map(brand => {
-          return { name: brand[0].toUpperCase() + brand.slice(1), value: brand }
+          return { name: capitalize(brand), value: brand }
         })
         } 
       />
@@ -69,5 +69,9 @@ const FilterControl = ({ categories, brands, minPrice, maxPrice }: FilterControl
   </form>
   );
 };
+
+function capitalize(word: string) {
+  return word[0].toUpperCase() + word.slice(1);
+}
 
 export default FilterControl;
