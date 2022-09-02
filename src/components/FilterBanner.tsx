@@ -1,17 +1,11 @@
-import './FilterControl.css';
+import './FilterBanner.css';
 import { useEffect, useState } from 'react';
 import * as Slider from '@radix-ui/react-slider';
 import * as styles from '../assets/styles';
 import Dropdown from './Dropdown';
+import { FilterBannerPropsType } from '../types';
 
-type FilterControlProps = { 
-  categories: string[], 
-  brands: string[], 
-  minPrice: number,
-  maxPrice: number, 
- };
-
-const FilterControl = ({ categories, brands, minPrice, maxPrice }: FilterControlProps) => {
+const FilterBanner = ({ categories, brands, minPrice, maxPrice }: FilterBannerPropsType) => {
   const [ isExpanded, setExpanded ] = useState(false);
   const [ categorySort, setCategorySort ] = useState('');
   const [ rangeSort, setRangeSort ] = useState([ minPrice, maxPrice ]);
@@ -24,9 +18,13 @@ const FilterControl = ({ categories, brands, minPrice, maxPrice }: FilterControl
   
   categories = Array.from(new Set(categories)); // remove duplicates
   brands = Array.from(new Set(brands));
+
+  const capitalize = (word: string) => {
+    return word[0].toUpperCase() + word.slice(1);
+  }
   
   return (
-  <form className="filter-container">
+  <form className="filter-banner">
     <button onClick={ () => setExpanded(!isExpanded) } 
       className='centered button' type="button"
     >
@@ -70,8 +68,11 @@ const FilterControl = ({ categories, brands, minPrice, maxPrice }: FilterControl
   );
 };
 
-function capitalize(word: string) {
-  return word[0].toUpperCase() + word.slice(1);
-}
+export default FilterBanner;
 
-export default FilterControl;
+export const FilterBannerSkeleton = () => (
+  <div className="filter-banner filter-banner-skeleton" hidden>
+    <span></span>
+    <span></span>
+  </div>
+);

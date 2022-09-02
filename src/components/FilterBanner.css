@@ -1,4 +1,4 @@
-.filter-container {
+.filter-banner {
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -51,4 +51,11 @@ label.price-range .range-input {
 }
 div.is-closed {
   display: none;
+}
+
+.filter-banner-skeleton > * {
+  background-color: var(--skeleton-bg);
+  animation: var(--skeleton-animation);
+  width: 4.5em;
+  height: 2em;
 }

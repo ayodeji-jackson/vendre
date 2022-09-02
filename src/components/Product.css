@@ -17,3 +17,21 @@
 .product__amount-in-cart-control button:disabled {
   opacity: .6;
 }
+
+.product-skeleton *, .product-skeleton *::after {
+  background-color: var(--skeleton-bg);
+  animation: var(--skeleton-animation);
+}
+.product-skeleton .product__name {
+  position: relative;
+  width: calc(100% - 4em);
+  height: 1em;
+}
+.product-skeleton .product__name::after {
+  position: absolute;
+  content: '';
+  width: 20%;
+  height: inherit;
+  bottom: -1.3em;
+  left: 0;
+}

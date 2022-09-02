@@ -1,37 +1,22 @@
-import FilterControl from "./FilterControl";
-import Product from "./Product";
+import { cartItemType, DummyJsonDataType, ProductType } from "../types";
+import FilterBanner, { FilterBannerSkeleton } from "./FilterBanner";
+import Product, { ProductSkeleton } from "./Product";
 import './Page.css';
 import { useEffect, useState } from "react";
-import ProductSkeleton from "./ProductSkeleton";
-import FilterControlSkeleton from "./FilterControlSkeleton";
 
-export type ProductType = {
-  brand: string, 
-  category: string, 
-  description?: string, 
-  discountPercentage?: number, 
-  id: number, 
-  images?: string[], 
-  price: number, 
-  rating?: number, 
-  stock?: number, 
-  thumbnail: string, 
-  title: string
-};
-
-type DummyJsonDataType = {
-  products: ProductType[], 
-  total: number, 
-  skip: number, 
-  limit: number
-}
-
-const Page = ({ name, productsUrl }: { name: string, productsUrl: string }) => {
+const Page = ({ name, productsUrl, returnCart }: 
+    { name: string, productsUrl: string, returnCart: (cart: cartItemType[]) => void 
+  }) => {
   const [ productData, setProductData ] = useState({} as DummyJsonDataType);
   const [ wishlist, setWishlist ] = 
     useState((JSON.parse(localStorage.getItem('wishlist')!) || []) as number[]);
   const [ cart, setCart ] = 
-    useState((JSON.parse(localStorage.getItem('cart')!) || []) as { id: number, count: number}[]);
+    useState((JSON.parse(localStorage.getItem('cart')!) || []) as cartItemType[]);
+
+  const cleanCart = (arr: cartItemType[]): cartItemType[] => {
+    return [ ...new Map(arr.map(v => [v.id, v])).values() ]
+      .filter(item => item.count !== 0);
+  };
 
   useEffect(() => {
     fetch(productsUrl)
@@ -42,8 +27,10 @@ const Page = ({ name, productsUrl }: { name: string, productsUrl: string }) => {
 
   useEffect(() => {
     localStorage.setItem('wishlist', JSON.stringify(wishlist));
-    console.log(cart);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    returnCart(cart);
   }, [wishlist, cart]);
+
 
   let isLoading: boolean = !Boolean(Object.keys(productData).length);
   let filterMap = new Map<keyof ProductType, any>();
@@ -58,8 +45,8 @@ const Page = ({ name, productsUrl }: { name: string, productsUrl: string }) => {
   return (
     <>
       { isLoading ? 
-        <FilterControlSkeleton /> :
-        <FilterControl minPrice={ Math.min(...filterMap.get('price')) } 
+        <FilterBannerSkeleton /> :
+        <FilterBanner minPrice={ Math.min(...filterMap.get('price')) } 
           maxPrice={ Math.max(...filterMap.get('price')) } 
           categories={ filterMap.get('category') } brands={ filterMap.get('brand') }
         /> 
@@ -73,13 +60,7 @@ const Page = ({ name, productsUrl }: { name: string, productsUrl: string }) => {
               <Product key={ product.id }
                 product={ product } 
                 onLike={ () => setWishlist([ ...wishlist, product.id ]) } 
-                onAddToCart={ 
-                  (id, count) => setCart(
-                    cart.some(item => item.id == id) ? 
-                    cart.map(item => item.id == id ? { id, count } : item) :
-                    [ ...cart, { id, count }]
-                    )
-                }
+                onAddToCart={ count => setCart(cleanCart([ ...cart, { id: product.id, count }]))}
               />
             ))
           }

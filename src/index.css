@@ -53,6 +53,9 @@ button > span.icon {
   font-size: 1.5rem;
   margin-left: .5em;
 }
+input:not([type="radio"], [type="checkbox"]) {
+  font-size: .9rem;
+}
 .cta-link {
   font-weight: bold;
 }

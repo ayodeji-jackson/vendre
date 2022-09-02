@@ -1,11 +1,10 @@
 import './Header.css';
 import { SearchIcon, CartIcon, HeartIcon } from '../assets/icons';
 import * as Popover from '@radix-ui/react-popover';
-import { useContext } from 'react';
-import { CartContext } from '../App';
+import { cartItemType } from '../types';
 
-const Header = () => { 
-  const { cart } = useContext(CartContext);
+const Header = ({ cart }: { cart: cartItemType[] }) => { 
+  let itemsInCart = cart.map(item => item.count).reduce((a, b) => a + b, 0);
 
   return (
     <header>
@@ -18,7 +17,7 @@ const Header = () => {
         <Popover.Portal>
           <Popover.Content align='start'>
             <form className='form-search'>
-              <input type="search" placeholder='Search query' />
+              <input type="search" />
             </form>
           </Popover.Content>
         </Popover.Portal>
@@ -40,6 +39,7 @@ const Header = () => {
         </Popover.Trigger>
         <Popover.Portal>
           <Popover.Content align='end'>
+            
             <ul className='menu centered'>
               <li><a href="#"><HeartIcon />Wishlist</a></li>
             </ul>
@@ -47,7 +47,10 @@ const Header = () => {
         </Popover.Portal>
       </Popover.Root>
       <button type="button" className="open-cart" title='Open cart'>
-        <CartIcon /><span className='cart-count centered'>{ cart.length }</span>
+        <CartIcon />
+        <span className='cart-count centered'>
+          { itemsInCart < 100 ? itemsInCart : 99 }
+        </span>
       </button>
     </header>
   )

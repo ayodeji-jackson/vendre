@@ -97,11 +97,12 @@ span.cart-count {
   border: 3px solid white;
   left: 50%;
   top: 10%;
+  font-size: .9rem;
   background-color: #bd7d3d;
   color: white;
   border-radius: 50%;
-  height: 1.5em;
-  width: 1.5em;
+  height: 1.5rem;
+  width: 1.5rem;
 }
 .anchor {
   position: fixed;

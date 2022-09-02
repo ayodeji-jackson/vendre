@@ -1,19 +1,23 @@
-import { createContext } from 'react';
+import { useState } from 'react';
 import Header from './components/Header';
 import Page from "./components/Page";
+import { cartItemType } from './types';
 
-export const CartContext = createContext({
-  cart: [] as { id: number, count: number }[], 
-  updateCart: (): void => {}
-});
+const App = () => {
+  const [ cart, setCart ] = useState([] as cartItemType[]);
+  const getCart = (pageCart: cartItemType[]) => {
+    setCart(pageCart);
+  };
 
-const App = () => (
-  <>
-    <Header />
-    <Page name="New Arrivals"
-      productsUrl="https://dummyjson.com/products/?select=thumbnail,title,price,category,brand,stock&limit=5" 
-    />
-  </>
-);
+  return (
+    <>
+      <Header cart={ cart } />
+      <Page name="New Arrivals"
+        productsUrl="https://dummyjson.com/products/?select=thumbnail,title,price,category,brand,stock&limit=5" 
+        returnCart={ getCart }
+      />
+    </>
+  );
+}
 
 export default App;

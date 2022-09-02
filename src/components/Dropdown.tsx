@@ -10,17 +10,7 @@ import { AngleIcon, DotIcon } from '../assets/icons';
 import { itemIndicatorStyles, radioItemStyles } from "../assets/styles";
 import './Dropdown.css';
 
-type DropdownMenuItemType = {
-  name: string,
-  value: string, 
-}
-
-type DropdownMenuType = {
-  name: string, 
-  items: DropdownMenuItemType[], 
-  value?: string, 
-  onValueChange?: (value: string) => void
-}
+import { DropdownMenuType } from "../types";
 
 const DropdownMenu = ({ name, value, items, onValueChange }: DropdownMenuType) => (
   <Root>
