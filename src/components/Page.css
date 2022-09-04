@@ -54,7 +54,6 @@ main .product__image {
   height: 60%;
 }
 main .product-end {
-  --color: #bc7d40;
   color: var(--color);
   margin-top: auto;
   display: flex;

@@ -5,6 +5,8 @@
   --skeleton-bg: rgb(143, 143, 143);
   --skeleton-animation: 2s pulsate ease infinite;
   --shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
+  --color: #bc7d40;
+  --button-bg-color: white;
 }
 *, ::before, ::after {
   box-sizing: inherit;
@@ -45,9 +47,10 @@ a:hover::after, a:focus::after {
 }
 button {
   font-size: .9rem;
+  background-color: var(--button-bg-color);
 }
 :where(button:hover, button:focus) {
-  background-color: rgba(221, 221, 221, 0.3);
+  --button-bg-color: rgba(221, 221, 221, 0.3);
 }
 button > span.icon {
   font-size: 1.5rem;

@@ -65,25 +65,55 @@ header button.open-menu::after {
   width: 1.5em;
   background-color: black;
 }
-.menu {
+.side-bar {
   position: fixed;
+  display: flex;
+  flex-direction: column;
+  gap: 5em;
   width: clamp(35vw, 27rem, 100vw);
   background-color: white;
   height: 100vh;
   z-index: 2;
   right: 0;
   box-shadow: var(--shadow);
-  transition: transform .3s linear;
+  padding: 5em 3em;
 }
-.menu > li > a {
+.side-bar__heading {
+  font-size: 1.5rem;
+  display: flex;
+}
+.side-bar__heading > button {
+  margin-left: auto;
+  font-size: 1.5rem;
+}
+.side-bar__heading > button:hover {
+  background-color: transparent;
+  opacity: .5;
+}
+.side-bar__heading > button:focus {
+  background-color: transparent;
+}
+.side-bar__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  padding-right: 2em;
+}
+.menu li {
+  width: fit-content;
+}
+.cart > .side-bar__body {
+  overflow-x: auto;
+}
+.side-bar__body li > a {
   display: flex;
   align-items: center;
   gap: .5em;
 }
-.menu svg {
+.side-bar svg {
   width: 1.1em;
 }
-.menu svg > path {
+.side-bar svg > path {
   fill: inherit;
 }
 header button.open-cart {
@@ -94,7 +124,7 @@ header button.open-cart {
 }
 span.cart-count {
   position: absolute;
-  border: 3px solid white;
+  border: 3px solid var(--button-bg-color);
   left: 50%;
   top: 10%;
   font-size: .9rem;
@@ -103,6 +133,7 @@ span.cart-count {
   border-radius: 50%;
   height: 1.5rem;
   width: 1.5rem;
+  z-index: 0;
 }
 .anchor {
   position: fixed;

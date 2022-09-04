@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@hookstate/core': 4.0.0-rc21
   '@radix-ui/react-dropdown-menu': ^1.0.0
   '@radix-ui/react-popover': ^1.0.0
   '@radix-ui/react-slider': ^1.0.0
@@ -13,6 +14,7 @@ specifiers:
   vite: ^3.0.7
 
 dependencies:
+  '@hookstate/core': 4.0.0-rc21_react@18.2.0
   '@radix-ui/react-dropdown-menu': 1.0.0_zxljzmqdrxwnuenbkrz77w74uy
   '@radix-ui/react-popover': 1.0.0_zxljzmqdrxwnuenbkrz77w74uy
   '@radix-ui/react-slider': 1.0.0_biqbaboplfbrettd7655fr4n2y
@@ -333,6 +335,14 @@ packages:
       use-isomorphic-layout-effect: 1.1.2_ug65io7jkbhmo4fihdmbrh3ina
     transitivePeerDependencies:
       - '@types/react'
+    dev: false
+
+  /@hookstate/core/4.0.0-rc21_react@18.2.0:
+    resolution: {integrity: sha512-aAiF537i9a54OlWzA/EtOa1l4bJMmpmJ4Fb/ZV8R30xD6jGMCGbCxHcb6SWIqO92T/w8dFXyl5XQbQ8reFpQrA==}
+    peerDependencies:
+      react: ^16.8.6 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /@jridgewell/gen-mapping/0.1.1:

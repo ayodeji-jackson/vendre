@@ -4,8 +4,9 @@
   gap: 1em;
 }
 .product__amount-in-cart-control button {
+  --size: 1.4em;
   font-size: 1.5rem;
-  padding: .2em .5em;
+  height: var(--size); width: var(--size);
   background-color: var(--color);
   color: white;
   border-radius: .2em;
@@ -22,12 +23,12 @@
   background-color: var(--skeleton-bg);
   animation: var(--skeleton-animation);
 }
-.product-skeleton .product__name {
+.product-skeleton .product__text {
   position: relative;
   width: calc(100% - 4em);
   height: 1em;
 }
-.product-skeleton .product__name::after {
+.product-skeleton .product__text::after {
   position: absolute;
   content: '';
   width: 20%;
