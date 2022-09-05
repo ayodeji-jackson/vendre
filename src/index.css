@@ -117,9 +117,18 @@ button[aria-label="close"]:focus {
   animation: toastSlideDown .2s var(--animation-fn);
 }
 .toast__body[data-state="closed"] {
-  animation: toastSlideUp .2s var(--animation-fn)
+  animation: toastSlideUp .2s ease-out;
 }
-
+.toast__body[data-swipe="move"] {
+  transform: translateX(var(--radix-toast-swipe-move-x));
+}
+.toast__body[data-swipe="cancel"] {
+  transform: translateX(0);
+  transition: transform .2s ease-out;
+}
+.toast__body[data-swipe="end"] {
+  animation: swipeRight .1s ease-out;
+}
 .toast__body .centered {
   gap: 1em;
   flex-wrap: wrap;
@@ -148,23 +157,27 @@ svg {
     from { transform: translateX(0); }
     to { transform: translateX(100%) }
   }
-  @keyframes slideDown {
+  @keyframes swipeRight {
+    from { transform: translateX(var(--radix-toast-swipe-end-x)) }
+    to { transform: translateX(100%) }
+  }
+  @keyframes slideDownAndFade {
     from {
-      transform: translateY(0);
+      transform: translateY(1em);
       opacity: 0;
     }
     to {
-      transform: translateY(1em);
+      transform: translateY(0);
       opacity: 1;
     }
   }
-  @keyframes slideUp {
+  @keyframes slideUpAndFade {
     from {
-      transform: translateY(1em);
+      transform: translateY(0);
       opacity: 1;
     }
     to {
-      transform: translateY(0);
+      transform: translateY(1em);
       opacity: 0;
     }
   }

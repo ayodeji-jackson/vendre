@@ -9,6 +9,12 @@
   max-height: 20em;
   overflow: auto;
 }
+.dropdown__body[data-state="open"] {
+  animation: slideDownAndFade .2s var(--animation-fn);
+}
+.dropdown__body[data-state="closed"] {
+  animation: slideUpAndFade .2s var(--animation-fn);
+}
 .dropdown__body .button {
   width: 100%;
   text-align: left;

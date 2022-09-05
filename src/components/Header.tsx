@@ -50,7 +50,9 @@ const Header = () => {
 
   return (
     <header>
-      <Toast.Root className="overlay toast__body" open={ fetchError }>
+      <Toast.Root className="overlay toast__body" open={ fetchError }
+        onOpenChange={ setFetchError }
+      >
         <Toast.Description>
           You're offline
         </Toast.Description>
@@ -58,7 +60,7 @@ const Header = () => {
           <Toast.Action asChild altText="Refresh">
             <button onClick={ () => window.location.reload() } className="button">Refresh</button>
           </Toast.Action>
-          <Toast.Close onClick={ () => setFetchError(false) } className="toast__close" aria-label="close">
+          <Toast.Close className="toast__close" aria-label="close">
             <span aria-hidden="true">✕</span>
           </Toast.Close>
         </div>
@@ -70,7 +72,7 @@ const Header = () => {
           </button>
         </Popover.Trigger>
         <Popover.Portal>
-          <Popover.Content align='start'>
+          <Popover.Content asChild align='start'>
             <form className='form-search'>
               <input type="search" />
             </form>

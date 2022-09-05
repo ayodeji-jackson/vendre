@@ -26,7 +26,7 @@ const App = () => {
   }, [wishlist.get()]);
 
   return (
-    <ToastProvider>
+    <ToastProvider swipeDirection='right'>
       <ToastViewport className="toast centered" />
       <Header />
       <Page name="New Arrivals"

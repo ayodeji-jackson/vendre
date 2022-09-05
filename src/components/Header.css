@@ -16,6 +16,12 @@ form.form-search {
   top: 1px;
   width: 9rem;
 }
+form.form-search[data-state="open"] {
+  animation: slideDownAndFade .3s var(--animation-fn);
+}
+form.form-search[data-state="closed"] {
+  animation: slideUpAndFade .3s var(--animation-fn);
+}
 form.form-search > input {
   border: var(--border);
   background-color: white;
