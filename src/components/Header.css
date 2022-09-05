@@ -98,12 +98,21 @@ header button.open-menu::after {
   flex-direction: column;
   gap: 2em;
   padding-right: 2em;
+  overflow-x: auto;
 }
 .menu li {
   width: fit-content;
 }
 .cart > .side-bar__body {
-  overflow-x: auto;
+  scrollbar-width: thin;
+}
+.cart > .side-bar__body::-webkit-scrollbar {
+  background-color: transparent;
+  width: 4px;
+}
+.cart > .side-bar__body:hover::-webkit-scrollbar-thumb {
+  background-color: #c1c1c1;
+  border-radius: 18%;
 }
 .side-bar__body li > a {
   display: flex;
@@ -137,6 +146,9 @@ span.cart-count {
 }
 .anchor {
   position: fixed;
+}
+.cart button.checkout {
+  color: var(--color);
 }
 @media screen and (min-width: 18.5em) {
   header {
