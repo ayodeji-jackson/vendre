@@ -16,13 +16,25 @@ const Header = () => {
 
   let isLoading: boolean = !Boolean(Object.keys(products).length);
 
-  useEffect(() => {
+  const getProducts = () => {
     Promise.all(
       cartState.attach(Downgraded).get()
         .map(({ id }) => fetch(`${URL}/${id}`))
     ).then(responses => Promise.all(responses.map(res => res.json()))
       .then(values => setProducts(values)))
       .catch(err => console.error);
+  }
+
+  useEffect(getProducts, []);
+
+  useEffect(() => {
+    // syncing cart global state with product local state
+    setProducts(
+      products.filter(({ id }) => 
+        cartState.attach(Downgraded).get().findIndex(item => item.id === id) !== -1
+      )
+    );
+    getProducts();
   }, [cartState]);
 
   const getTotal = (products: ProductType[]): number => {
@@ -32,7 +44,7 @@ const Header = () => {
       total += count! * price;
     }
     return total;
-  }
+  };
 
   return (
     <header>
@@ -68,7 +80,7 @@ const Header = () => {
         <Popover.Portal>
           <Popover.Content className='menu side-bar' align='end'>
             <h2 className="side-bar__heading">
-              Menu<Popover.Close aria-label='close'>✕</Popover.Close>
+              Menu<Popover.Close aria-label='close'><span aria-hidden="true">✕</span></Popover.Close>
             </h2>
             <ul className='side-bar__body'>
               <li><a href="#"><HeartIcon />Wishlist</a></li>
@@ -90,11 +102,11 @@ const Header = () => {
         <Popover.Portal>
           <Popover.Content className="cart side-bar" align='end'>
             <h2 className="side-bar__heading">
-              Cart<Popover.Close aria-label='close'>✕</Popover.Close>
+              Cart<Popover.Close aria-label='close'><span aria-hidden="true">✕</span></Popover.Close>
             </h2>
             <ul className="side-bar__body">
               { isLoading ? 
-                ' '.repeat(3).split('').map((_, i) => (<CartItemSkeleton key={ i } />)) :
+                ' '.repeat(cartState.get().length).split('').map((_, i) => (<CartItemSkeleton key={ i } />)) :
                 products.map(product => (
                   <CartItem key={ product.id }
                     product={ product } 
@@ -102,7 +114,11 @@ const Header = () => {
                 ))
               }
             </ul>
-            { !isLoading && <button className="checkout button">Checkout (${ getTotal(products) })</button> }
+            { !isLoading && 
+              <button className="checkout button">
+                Checkout (${ getTotal(products) })
+              </button> 
+            }
           </Popover.Content>
         </Popover.Portal>
       </Popover.Root>
