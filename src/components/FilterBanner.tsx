@@ -4,6 +4,8 @@ import * as Slider from '@radix-ui/react-slider';
 import * as styles from '../assets/styles';
 import Dropdown from './Dropdown';
 import { FilterBannerPropsType } from '../types';
+import { useHookstate } from '@hookstate/core';
+import { url } from '../App';
 
 const FilterBanner = ({ categories, brands, minPrice, maxPrice }: FilterBannerPropsType) => {
   const [ isExpanded, setExpanded ] = useState(false);
@@ -14,7 +16,8 @@ const FilterBanner = ({ categories, brands, minPrice, maxPrice }: FilterBannerPr
 
   useEffect(() => {
     // handling form events on component update
-  }, [priceSort, categorySort, rangeSort, brandSort]);
+    url.pathname += `/${categorySort}`;
+  }, [categorySort]);
   
   categories = Array.from(new Set(categories)); // remove duplicates
   brands = Array.from(new Set(brands));
@@ -24,7 +27,7 @@ const FilterBanner = ({ categories, brands, minPrice, maxPrice }: FilterBannerPr
   }
   
   return (
-  <form className="filter-banner">
+  <div className="filter-banner">
     <button onClick={ () => setExpanded(!isExpanded) } 
       className='centered button' type="button"
     >
@@ -64,7 +67,7 @@ const FilterBanner = ({ categories, brands, minPrice, maxPrice }: FilterBannerPr
         { name: "Highest to lowest", value: 'desc' } ] 
       } 
     />
-  </form>
+  </div>
   );
 };
 

@@ -5,7 +5,7 @@ import { Downgraded, hookstate, useHookstate } from '@hookstate/core';
 import { useEffect } from 'react';
 import { ToastProvider, ToastViewport } from '@radix-ui/react-toast';
 
-export const URL = "https://dummyjson.com/products";
+export const PAGE_URL = "https://dummyjson.com/products";
 
 export const cartGlobalState = hookstate(
   (JSON.parse(localStorage.getItem('cart')!) || []) as cartItemType[]
@@ -13,6 +13,7 @@ export const cartGlobalState = hookstate(
 export const wishlistGlobalState = hookstate(
   (JSON.parse(localStorage.getItem('wishlist')!) || []) as number[]
 );
+export const url = new URL(`${PAGE_URL}?select=thumbnail,title,price,category,brand,stock&limit=5`);
 
 const App = () => {
   const cart = useHookstate(cartGlobalState);
@@ -29,8 +30,10 @@ const App = () => {
     <ToastProvider swipeDirection='right'>
       <ToastViewport className="toast centered" />
       <Header />
-      <Page name="New Arrivals"
-        productsUrl={ `${URL}?select=thumbnail,title,price,category,brand,stock&limit=5` } 
+      <Page title="New Arrivals"
+        productsUrl={ 
+          `${url.href}` 
+        } 
       />
     </ToastProvider>
   );

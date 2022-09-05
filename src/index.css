@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-
 :root {
   box-sizing: border-box;
   font-family: 'Product Sans', sans-serif;
@@ -109,7 +107,7 @@ button[aria-label="close"]:focus {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  width: clamp(31vw, 20rem, calc(100vw - 4em));
+  width: clamp(20vw, 20rem, calc(100vw - 4em));
   justify-content: space-between;
   padding: 1.5em 1em;
 }
@@ -127,7 +125,7 @@ button[aria-label="close"]:focus {
   transition: transform .2s ease-out;
 }
 .toast__body[data-swipe="end"] {
-  animation: swipeRight .1s ease-out;
+  animation: swipeRight .2s ease-out;
 }
 .toast__body .centered {
   gap: 1em;
@@ -159,7 +157,7 @@ svg {
   }
   @keyframes swipeRight {
     from { transform: translateX(var(--radix-toast-swipe-end-x)) }
-    to { transform: translateX(100%) }
+    to { transform: translateX(250%) }
   }
   @keyframes slideDownAndFade {
     from {

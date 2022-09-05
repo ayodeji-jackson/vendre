@@ -4,7 +4,7 @@ import * as Popover from '@radix-ui/react-popover';
 import { Downgraded, useHookstate } from '@hookstate/core';
 import { cartGlobalState } from '../App';
 import CartItem, { CartItemSkeleton } from './CartItem';
-import { URL } from '../App';
+import { PAGE_URL } from '../App';
 import { ProductType } from '../types';
 import { useEffect, useState } from 'react';
 import * as Toast from '@radix-ui/react-toast';
@@ -21,7 +21,7 @@ const Header = () => {
   const getProducts = () => {
     Promise.all(
       cartState.attach(Downgraded).get()
-        .map(({ id }) => fetch(`${URL}/${id}`))
+        .map(({ id }) => fetch(`${PAGE_URL}/${id}`))
     ).then(responses => Promise.all(responses.map(res => res.json()))
       .then(values => setProducts(values)))
       .catch(err => setFetchError(true));

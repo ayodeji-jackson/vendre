@@ -5,8 +5,8 @@ import './Page.css';
 import { useEffect, useState } from "react";
 import * as Toast from '@radix-ui/react-toast'
 
-const Page = ({ name, productsUrl }: 
-    { name: string, productsUrl: string 
+const Page = ({ title, productsUrl }: 
+    { title: string, productsUrl: string 
   }) => {
   const [ productData, setProductData ] = useState({} as DummyJsonDataType);
   const [ fetchError, setFetchError ] = useState(false);
@@ -53,7 +53,7 @@ const Page = ({ name, productsUrl }:
             </Toast.Close>
           </div>
         </Toast.Root>
-        <h2 className="heading">{ name }</h2>
+        <h2 className="heading">{ title }</h2>
         <ul className="product-container">
           { isLoading ? 
             ' '.repeat(10).split('').map((_, i) => (<ProductSkeleton key={ i } />)) :

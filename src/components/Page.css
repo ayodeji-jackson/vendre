@@ -9,7 +9,7 @@ main .product-container {
 main .heading {
   font-size: 1.5rem;
   height: auto;
-  margin-bottom: 1em;
+  margin-bottom: 1.5em;
 }
 main .product {
   display: flex;
@@ -70,7 +70,7 @@ main .product__price {
     grid-template-columns: 1fr 1fr;
   }
   main .product:nth-child(2n) {
-    margin-top: -3em; /* layout hack */
+    margin-top: -4em; /* layout hack */
   }
 }
 @media screen and (min-width: 48em) {
