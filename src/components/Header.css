@@ -15,7 +15,6 @@ form.form-search {
   left: 0;
   top: 1px;
   width: 9rem;
-  transition: transform .3s linear;
 }
 form.form-search > input {
   border: var(--border);
@@ -78,20 +77,15 @@ header button.open-menu::after {
   box-shadow: var(--shadow);
   padding: 5em 3em;
 }
+.side-bar[data-state="open"] {
+  animation: slideLeft .2s var(--animation-fn);
+}
+.side-bar[data-state="closed"] {
+  animation: slideRight .2s var(--animation-fn);
+}
 .side-bar__heading {
   font-size: 1.5rem;
   display: flex;
-}
-.side-bar__heading > button {
-  margin-left: auto;
-  font-size: 1.5rem;
-}
-.side-bar__heading > button:hover {
-  background-color: transparent;
-  opacity: .5;
-}
-.side-bar__heading > button:focus {
-  background-color: transparent;
 }
 .side-bar__body {
   display: flex;

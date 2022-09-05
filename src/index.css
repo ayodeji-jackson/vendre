@@ -1,12 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
 :root {
   box-sizing: border-box;
-  font-family: 'Product Sans';
+  font-family: 'Product Sans', sans-serif;
   --border: 1px solid silver;
   --skeleton-bg: rgb(143, 143, 143);
-  --skeleton-animation: 2s pulsate ease infinite;
+  --skeleton-animation: 1.5s pulsate ease infinite;
   --shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
   --color: #bc7d40;
   --button-bg-color: white;
+  --animation-fn: cubic-bezier(0.16, 1, 0.3, 1);
 }
 *, ::before, ::after {
   box-sizing: inherit;
@@ -76,6 +79,17 @@ input:not([type="radio"], [type="checkbox"]) {
   border-radius: .5em;
   padding: .5em;
 }
+button[aria-label="close"] {
+  margin-left: auto;
+  font-size: 1.5rem;
+}
+button[aria-label="close"]:hover {
+  background-color: transparent;
+  opacity: .5;
+}
+button[aria-label="close"]:focus {
+  background-color: transparent;
+}
 .overlay {
   position: absolute;
   background-color: white;
@@ -83,11 +97,75 @@ input:not([type="radio"], [type="checkbox"]) {
   border-radius: 1em;
   box-shadow: var(--shadow);
 }
+.toast {
+  position: fixed;
+  top: .5em;
+  left: 0;
+  width: 100vw;
+  z-index: 200;
+}
+.toast__body {
+  position: static;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  width: clamp(31vw, 20rem, calc(100vw - 4em));
+  justify-content: space-between;
+  padding: 1.5em 1em;
+}
+.toast__body[data-state="open"] {
+  animation: toastSlideDown .2s var(--animation-fn);
+}
+.toast__body[data-state="closed"] {
+  animation: toastSlideUp .2s var(--animation-fn)
+}
+
+.toast__body .centered {
+  gap: 1em;
+  flex-wrap: wrap;
+}
 svg {
   width: 1.5rem;
   height: min-content;
 }
-
-@keyframes pulsate {
-  50% { background-color: rgb(209, 209, 209); }
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes pulsate {
+    50% { background-color: rgb(209, 209, 209); }
+  }
+  @keyframes toastSlideDown {
+    from { transform: translateY(calc(-100% - 4em)); }
+    to { transform: translateY(0); }
+  }
+  @keyframes toastSlideUp {
+    from { transform: translateY(0); }
+    to { transform: translateY(calc(-100% - 4em)); }
+  }
+  @keyframes slideLeft {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0) }
+  }
+  @keyframes slideRight {
+    from { transform: translateX(0); }
+    to { transform: translateX(100%) }
+  }
+  @keyframes slideDown {
+    from {
+      transform: translateY(0);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(1em);
+      opacity: 1;
+    }
+  }
+  @keyframes slideUp {
+    from {
+      transform: translateY(1em);
+      opacity: 1;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 0;
+    }
+  }
 }

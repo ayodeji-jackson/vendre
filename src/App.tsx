@@ -3,6 +3,7 @@ import Page from "./components/Page";
 import { cartItemType } from './types';
 import { Downgraded, hookstate, useHookstate } from '@hookstate/core';
 import { useEffect } from 'react';
+import { ToastProvider, ToastViewport } from '@radix-ui/react-toast';
 
 export const URL = "https://dummyjson.com/products";
 
@@ -25,12 +26,13 @@ const App = () => {
   }, [wishlist.get()]);
 
   return (
-    <>
+    <ToastProvider>
+      <ToastViewport className="toast centered" />
       <Header />
       <Page name="New Arrivals"
         productsUrl={ `${URL}?select=thumbnail,title,price,category,brand,stock&limit=5` } 
       />
-    </>
+    </ToastProvider>
   );
 }
 
