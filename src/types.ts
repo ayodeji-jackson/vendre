@@ -15,29 +15,3 @@ export type ProductType = {
   thumbnail: string, 
   title: string
 };
-
-export type DummyJsonDataType = {
-  products: ProductType[], 
-  total: number, 
-  skip: number, 
-  limit: number
-};
-
-type DropdownMenuItemType = {
-  name: string,
-  value: string, 
-};
-
-export type DropdownMenuType = {
-  name: string, 
-  items: DropdownMenuItemType[], 
-  value?: string, 
-  onValueChange?: (value: string) => void
-};
-
-export type FilterBannerPropsType = { 
-  categories: string[], 
-  brands: string[], 
-  minPrice: number,
-  maxPrice: number, 
- };

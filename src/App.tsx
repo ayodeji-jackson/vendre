@@ -13,18 +13,21 @@ export const cartGlobalState = hookstate(
 export const wishlistGlobalState = hookstate(
   (JSON.parse(localStorage.getItem('wishlist')!) || []) as number[]
 );
-export const url = new URL(`${PAGE_URL}?select=thumbnail,title,price,category,brand,stock&limit=5`);
+export const filterGlobalState = hookstate({
+  category: '', brand: '', price: '', range: [0, 1000]
+});
 
 const App = () => {
   const cart = useHookstate(cartGlobalState);
   const wishlist = useHookstate(wishlistGlobalState);
+  const filters = useHookstate(filterGlobalState);
 
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart.attach(Downgraded).get()));
-  }, [cart.get()]);
+  }, [cart]);
   useEffect(() => {
     localStorage.setItem('wishlist', JSON.stringify(wishlist.attach(Downgraded).get()));
-  }, [wishlist.get()]);
+  }, [wishlist]);
 
   return (
     <ToastProvider swipeDirection='right'>
@@ -32,7 +35,7 @@ const App = () => {
       <Header />
       <Page title="New Arrivals"
         productsUrl={ 
-          `${url.href}` 
+          `${PAGE_URL}/?select=thumbnail,title,price,category,brand,stock&limit=5` 
         } 
       />
     </ToastProvider>
