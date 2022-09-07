@@ -64,7 +64,7 @@ const Page = ({ title, productsUrl }:
               .filter(({ category }) => categoryFilter.length ? category === categoryFilter : true)
               .filter(({ price }) => price >= minPrice && price <= maxPrice)
               .filter(({ brand }) => brandFilter.length ? brand === brandFilter : true)
-              .sort((a, b) => priceFilter === 'asc' ? a.price - b.price : b.price - a.price)
+              .sort((a, b) => priceFilter === 'asc' ? a.price - b.price : priceFilter === 'desc' ? b.price - a.price : 0)
               .map((prod: ProductType) => (
                 <Product key={ prod.id }
                   product={ prod }

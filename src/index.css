@@ -1,6 +1,16 @@
+@font-face {
+  font-family: ProductSans;
+  src: url('./assets/fonts/ProductSansRegular.ttf');
+}
+@font-face {
+  font-family: ProductSans;
+  src: url('./assets/fonts/ProductSansBold.ttf');
+  font-weight: bold;
+}
+
 :root {
   box-sizing: border-box;
-  font-family: 'Product Sans', sans-serif;
+  font-family: ProductSans, sans-serif;
   --border: 1px solid silver;
   --skeleton-bg: rgb(143, 143, 143);
   --skeleton-animation: 1.5s pulsate ease infinite;
