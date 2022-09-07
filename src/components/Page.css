@@ -42,8 +42,8 @@ main .product__add-to-wishlist > svg > path {
   stroke: silver;
 }
 main .product__add-to-wishlist.is-liked > svg > path {
-  fill: red;
-  stroke: red;
+  fill: rgb(255, 95, 95);
+  stroke: rgb(255, 95, 95);
   transition: .3s linear fill, 
     .3s linear stroke;
 }
