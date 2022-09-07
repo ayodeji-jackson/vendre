@@ -8,8 +8,10 @@ import * as Toast from '@radix-ui/react-toast';
 const Page = ({ title, productsUrl }: 
     { title: string, productsUrl: string 
   }) => {
-  const [ products, setProducts ] = useState({} as ProductType[]);
+  const [ products, setProducts ] = useState([] as ProductType[]);
+  const [ filteredProducts, setFilteredProducts ] = useState([] as ProductType[]);
   const [ fetchError, setFetchError ] = useState(false);
+  const isLoading: boolean = !Boolean(Object.keys(products).length);
 
   useEffect(() => {
     fetch(productsUrl)
@@ -18,7 +20,13 @@ const Page = ({ title, productsUrl }:
           .catch(() => setFetchError(true));
   }, []);
 
-  let isLoading: boolean = !Boolean(Object.keys(products).length);
+  useEffect(() => {
+    setFilteredProducts([] as ProductType[]);
+    fetch(productsUrl)
+      .then(res => res.json())
+        .then(data => setFilteredProducts(data.products))
+          .catch(() => setFetchError(true));
+  }, [productsUrl]);
 
   return (
     <>
@@ -46,7 +54,7 @@ const Page = ({ title, productsUrl }:
         <ul className="product-container">
           { isLoading ? 
             ' '.repeat(10).split('').map((_, i) => (<ProductSkeleton key={ i } />)) :
-            products.map((product: ProductType) => (
+            filteredProducts.map((product: ProductType) => (
               <Product key={ product.id }
                 product={ product }
               />

@@ -4,13 +4,12 @@ import * as Slider from '@radix-ui/react-slider';
 import * as styles from '../assets/styles';
 import Dropdown from './Dropdown';
 import { filterGlobalState } from '../App';
-import { useHookstate } from '@hookstate/core';
+import { Downgraded, useHookstate } from '@hookstate/core';
 import { ProductType } from '../types';
 
 const FilterBanner = ({ products }: { products: ProductType[] }) => {
   const [ isExpanded, setExpanded ] = useState(false);
   const filterState = useHookstate(filterGlobalState);
-  const [ local, setLocal ] = useState(filterState.get());
   const capitalize = (word: string) => {
     return word[0].toUpperCase() + word.slice(1);
   };
@@ -20,15 +19,11 @@ const FilterBanner = ({ products }: { products: ProductType[] }) => {
   const brands = Array.from(new Set(products.map(({ brand }) => brand)));
 
   useEffect(() => {
-    setLocal({ ...local, range: [minPrice, maxPrice]});
+    filterState.set({ ...filterState.attach(Downgraded).get(), range: [minPrice, maxPrice]});
   }, []);
-
-  useEffect(() => {
-    filterState.set(JSON.parse(JSON.stringify(local)));
-  }, [local]);
   
   return (
-  <div className="filter-banner">
+  <form className="filter-banner">
     <button onClick={ () => setExpanded(!isExpanded) } 
       className='centered button' type="button"
     >
@@ -36,16 +31,20 @@ const FilterBanner = ({ products }: { products: ProductType[] }) => {
       <span className='icon' aria-hidden="true">{ isExpanded ? '-' : '+' }</span>
     </button>
     <div className={ `more-filters overlay ${isExpanded ? '' : 'is-closed'}` }>
-      <Dropdown name="Categories" onValueChange={ value => setLocal({ ...local, category: value }) } 
-        value={ local.category }
+      <Dropdown name="Categories" onValueChange={ 
+          value => filterState.set({ ...filterState.attach(Downgraded).get(), category: value }) 
+        } 
+        value={ filterState.get().category }
         items={ categories.map(category => {
           return { name: capitalize(category), value: category }
         }) 
         } 
       />
-      <label className='price-range'>Price range: ${ local.range[0] }-${ local.range[1] }
+      <label className='price-range'>
+        Price range: ${ filterState.attach(Downgraded).get().range[0] }
+        -${ filterState.attach(Downgraded).get().range[1] }
         <Slider.Root className="range-input" aria-label="price range" 
-          onValueChange={ value => setLocal({ ...local, range: [...value] }) }
+          onValueChange={ value => filterState.set({ ...filterState.get(), range: value }) }
           min={ minPrice } max={ maxPrice } step={ 50 } minStepsBetweenThumbs={ 1 }
           defaultValue={[ minPrice, maxPrice ]} style={ styles.sliderRootStyles }
         >
@@ -56,8 +55,10 @@ const FilterBanner = ({ products }: { products: ProductType[] }) => {
           <Slider.Thumb style={ styles.sliderThumbStyles } />
         </Slider.Root>
       </label>
-      <Dropdown name="Brand" onValueChange={ value => setLocal({ ...local, brand: value }) } 
-        value={ local.brand }
+      <Dropdown name="Brand" onValueChange={ 
+          value => filterState.set({ ...filterState.attach(Downgraded).get(), brand: value }) 
+        } 
+        value={ filterState.get().brand }
         items={ brands.map(brand => {
           return { name: capitalize(brand), value: brand }
         })
@@ -65,13 +66,14 @@ const FilterBanner = ({ products }: { products: ProductType[] }) => {
       />
     </div>
     <Dropdown name="Sort by price" 
-      value={ local.price } 
-      onValueChange={ value => setLocal({ ...local, price: value }) }
+      value={ filterState.get().price } onValueChange={ 
+        value => filterState.set({ ...filterState.attach(Downgraded).get(), price: value }) 
+      }
       items={ [ { name: "Lowest to highest", value: "asc"}, 
         { name: "Highest to lowest", value: 'desc' } ] 
       } 
     />
-  </div>
+  </form>
   );
 };
 

@@ -2,7 +2,7 @@ import './Header.css';
 import { SearchIcon, CartIcon, HeartIcon } from '../assets/icons';
 import * as Popover from '@radix-ui/react-popover';
 import { Downgraded, useHookstate } from '@hookstate/core';
-import { cartGlobalState } from '../App';
+import { cartGlobalState, filterGlobalState } from '../App';
 import CartItem, { CartItemSkeleton } from './CartItem';
 import { PAGE_URL } from '../App';
 import { ProductType } from '../types';
@@ -11,6 +11,7 @@ import * as Toast from '@radix-ui/react-toast';
 
 const Header = () => { 
   const cartState = useHookstate(cartGlobalState);
+  const filterState = useHookstate(filterGlobalState);
   const [ fetchError, setFetchError ] = useState(false);
   const itemsInCart = cartState.attach(Downgraded).get()
     .map(item => item.count).reduce((a, b) => a + b, 0);
@@ -72,10 +73,10 @@ const Header = () => {
           </button>
         </Popover.Trigger>
         <Popover.Portal>
-          <Popover.Content asChild align='start'>
-            <form className='form-search'>
-              <input type="search" />
-            </form>
+          <Popover.Content className='search-container' align='start'>
+            <input type="search" onInput={ 
+              e => filterState.set({ ...filterState.attach(Downgraded).get(), search: (e.target as HTMLInputElement).value })
+            } value={ filterState.get().search } />
           </Popover.Content>
         </Popover.Portal>
       </Popover.Root>

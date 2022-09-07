@@ -14,7 +14,7 @@ export const wishlistGlobalState = hookstate(
   (JSON.parse(localStorage.getItem('wishlist')!) || []) as number[]
 );
 export const filterGlobalState = hookstate({
-  category: '', brand: '', price: '', range: [0, 1000]
+  category: '', brand: '', price: '', range: [0, 1000], search: ''
 });
 
 const App = () => {
@@ -35,7 +35,7 @@ const App = () => {
       <Header />
       <Page title="New Arrivals"
         productsUrl={ 
-          `${PAGE_URL}/?select=thumbnail,title,price,category,brand,stock&limit=5` 
+          `${PAGE_URL}${filters.get().category ? `/category/${filters.get().category}` : filters.get().search ? `/search` : ''}?select=thumbnail,title,price,category,brand,stock${filters.get().search ? `&q=${filters.get().search}` : ''}&limit=20` 
         } 
       />
     </ToastProvider>
