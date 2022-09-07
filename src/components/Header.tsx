@@ -7,12 +7,10 @@ import CartItem, { CartItemSkeleton } from './CartItem';
 import { PAGE_URL } from '../App';
 import { ProductType } from '../types';
 import { useEffect, useState } from 'react';
-import * as Toast from '@radix-ui/react-toast';
 
 const Header = () => { 
   const cartState = useHookstate(cartGlobalState);
   const filterState = useHookstate(filterGlobalState);
-  const [ fetchError, setFetchError ] = useState(false);
   const itemsInCart = cartState.attach(Downgraded).get()
     .map(item => item.count).reduce((a, b) => a + b, 0);
   const [ products, setProducts ] = useState([] as ProductType[]);
@@ -25,7 +23,7 @@ const Header = () => {
         .map(({ id }) => fetch(`${PAGE_URL}/${id}`))
     ).then(responses => Promise.all(responses.map(res => res.json()))
       .then(values => setProducts(values)))
-      .catch(err => setFetchError(true));
+      .catch(err => console.error);
   }
 
   useEffect(getProducts, []);
@@ -51,21 +49,6 @@ const Header = () => {
 
   return (
     <header>
-      <Toast.Root className="overlay toast__body" open={ fetchError }
-        onOpenChange={ setFetchError }
-      >
-        <Toast.Description>
-          You're offline
-        </Toast.Description>
-        <div className="centered">
-          <Toast.Action asChild altText="Refresh">
-            <button onClick={ () => window.location.reload() } className="button">Refresh</button>
-          </Toast.Action>
-          <Toast.Close className="toast__close" aria-label="close">
-            <span aria-hidden="true">✕</span>
-          </Toast.Close>
-        </div>
-      </Toast.Root>
       <Popover.Root>
         <Popover.Trigger asChild>
           <button type="button" className="open-search" title='Open search'>

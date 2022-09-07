@@ -35,9 +35,9 @@ const FilterBanner = ({ products }: { products: ProductType[] }) => {
           value => filterState.set({ ...filterState.attach(Downgraded).get(), category: value }) 
         } 
         value={ filterState.get().category }
-        items={ categories.map(category => {
+        items={ [ { name: 'All', value: '' }, ...categories.map(category => {
           return { name: capitalize(category), value: category }
-        }) 
+        }) ]
         } 
       />
       <label className='price-range'>
@@ -59,9 +59,9 @@ const FilterBanner = ({ products }: { products: ProductType[] }) => {
           value => filterState.set({ ...filterState.attach(Downgraded).get(), brand: value }) 
         } 
         value={ filterState.get().brand }
-        items={ brands.map(brand => {
+        items={ [ { name: 'All', value: '' }, ...brands.map(brand => {
           return { name: capitalize(brand), value: brand }
-        })
+        }) ]
         } 
       />
     </div>

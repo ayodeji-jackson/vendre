@@ -35,7 +35,7 @@ const App = () => {
       <Header />
       <Page title="New Arrivals"
         productsUrl={ 
-          `${PAGE_URL}${filters.get().category ? `/category/${filters.get().category}` : filters.get().search ? `/search` : ''}?select=thumbnail,title,price,category,brand,stock${filters.get().search ? `&q=${filters.get().search}` : ''}&limit=20` 
+          `${PAGE_URL}${filters.get().search ? `/search?q=${filters.get().search}&` : '?'}select=thumbnail,title,price,category,brand,stock` 
         } 
       />
     </ToastProvider>

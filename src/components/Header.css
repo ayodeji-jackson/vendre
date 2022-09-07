@@ -98,7 +98,6 @@ header button.open-menu::after {
   flex-direction: column;
   gap: 2em;
   padding-right: 2em;
-  overflow-x: auto;
 }
 .menu li {
   width: fit-content;
@@ -106,6 +105,7 @@ header button.open-menu::after {
 .cart > .side-bar__body {
   scrollbar-color: transparent;
   scrollbar-width: thin;
+  overflow-x: auto;
 }
 .cart > .side-bar__body:hover {
   scrollbar-color: #c1c1c1;

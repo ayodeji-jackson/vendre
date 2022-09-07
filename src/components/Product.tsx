@@ -38,7 +38,7 @@ const Product = ({ product }: { product: ProductType }) => {
       >
         <HeartIcon />
       </button>
-      <img alt="Product image" src={ product.thumbnail } className="product__image" />
+      <img alt={ product.title } src={ product.thumbnail } className="product__image" />
       <p className="product__name">{ product.title }</p>
       <div className="product-end">
         <p className="product__price">${ product.price.toLocaleString() }</p>
