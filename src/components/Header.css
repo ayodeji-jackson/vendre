@@ -8,7 +8,12 @@ header > * {
   width: 100%;
 }
 header button.open-search {
-  display: none;
+  position: fixed;
+  width: fit-content;
+  background-color: transparent;
+  left: 1em;
+  top: 1em;
+  z-index: 20;
 }
 .search-container {
   position: absolute;
@@ -178,6 +183,7 @@ span.cart-count {
 @media screen and (min-width: 48em) {
   header button.open-search {
     display: initial;
+    position: static;
     order: -3;
     width: 9rem;
     border-bottom: var(--border);
