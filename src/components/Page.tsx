@@ -14,6 +14,7 @@ const Page = ({ title, urls, icon }:
   const [ fetchError, setFetchError ] = useState(false);
   const [ minPrice, maxPrice ] = useHookstate(filterGlobalState).get().range;
   const categoryFilter = useHookstate(filterGlobalState).get().category;
+  const searchFilter = useHookstate(filterGlobalState).get().search;
   // const brandFilter = useHookstate(filterGlobalState).get().brand;
   const priceFilter = useHookstate(filterGlobalState).get().price;
   const isLoading: boolean = !Boolean(Object.keys(products).length);
@@ -61,6 +62,7 @@ const Page = ({ title, urls, icon }:
               .filter(({ category }) => categoryFilter.length ? category === categoryFilter : true)
               .filter(({ price }) => price >= minPrice && price <= maxPrice)
               // .filter(({ brand }) => brandFilter.length ? brand === brandFilter : true)
+              .filter(({ title, category }) => new RegExp(searchFilter.toLowerCase()).test(title.toLowerCase() + category.toLowerCase()))
               .sort((a, b) => priceFilter === 'asc' ? a.price - b.price : priceFilter === 'desc' ? b.price - a.price : 0)
               .map((prod: ProductType) => (
                 <Product key={ prod.id }

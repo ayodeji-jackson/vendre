@@ -9,12 +9,22 @@ import { cartItemType, ProductType } from '../types';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+const NavLinks = ({orientation, onClick}: {orientation: "horizontal" | "vertical", onClick?: () => void}) => (
+  <>
+    <li><Link to="/" onClick={onClick}>{ orientation === 'horizontal' ? '' : '✨' } New collection</Link></li>
+    <li><Link to="/mens-clothing" onClick={onClick}>{ orientation === 'horizontal' ? '' : '👖'  } Men</Link></li>
+    <li><Link to="/womens-clothing" onClick={onClick}>{ orientation === 'horizontal' ? '' : '👗' } Women</Link></li>
+    <li><Link to="/" className="cta-link" onClick={onClick}>{ orientation === "horizontal" ? "Sale 🔥" : "🔥 Sale" }</Link></li>
+  </>
+);
+
 const Header = () => { 
   const cartState = useHookstate(cartGlobalState);
   const filterState = useHookstate(filterGlobalState);
   const itemsInCart = cartState.attach(Downgraded).get()
     .map(item => item.count).reduce((a, b) => a + b, 0);
   const [ products, setProducts ] = useState([] as ProductType[]);
+  const [ sideBarOpen, setSideBarOpen ] = useState(false);
 
   let isLoading: boolean = !Boolean(Object.keys(products).length);
 
@@ -41,13 +51,13 @@ const Header = () => {
     getProducts(cart);
   }, [cartState]);
 
-  const getTotal = (products: ProductType[]): number => {
+  const getTotal = (products: ProductType[]): string => {
     let total: number = 0;
     for (let { id, price } of products) {
       let count = cartState.attach(Downgraded).get().find(item => item.id === id)?.count;
       total += count! * price;
     }
-    return total;
+    return total.toFixed(2);
   };
 
   return (
@@ -70,13 +80,10 @@ const Header = () => {
       <h1 className="logo centered">Vendre.</h1>
       <nav>
         <ul>
-          <li><Link to="/">New collection</Link></li>
-          <li><Link to="/mens-clothing">Men</Link></li>
-          <li><Link to="/womens-clothing">Women</Link></li>
-          <li><Link to="/sale" className="cta-link">Sale 🔥</Link></li>
+          <NavLinks orientation='horizontal' />
         </ul>
       </nav>
-      <Popover.Root modal={true}>
+      <Popover.Root modal={true} open={sideBarOpen} onOpenChange={setSideBarOpen}>
         <Popover.Anchor className='anchor' />
         <Popover.Trigger asChild>
           <button type="button" className="open-menu icon-button">
@@ -89,8 +96,8 @@ const Header = () => {
               Menu<Popover.Close aria-label='close'><span aria-hidden="true">✕</span></Popover.Close>
             </h2>
             <ul className='side-bar__body'>
-              <li><Link to="/wishlist"><HeartIcon />Wishlist</Link></li>
-              <li><a href="#"><span>🔥</span>Sale</a></li>
+              { window.innerWidth < 768 && <NavLinks orientation='vertical' onClick={ () => setSideBarOpen(false) } /> } { /* 48em */ }
+              <li><Link to="/wishlist" className='centered' onClick={ () => setSideBarOpen(false) }><HeartIcon />&nbsp;Wishlist</Link></li>
             </ul>
           </Popover.Content>
         </Popover.Portal>

@@ -13,7 +13,7 @@ header button.open-search {
   background-color: transparent;
   left: 1em;
   top: 1em;
-  z-index: 20;
+  z-index: 1;
 }
 .search-container {
   position: absolute;
@@ -86,7 +86,7 @@ header button.open-menu::after {
   z-index: 2;
   right: 0;
   box-shadow: var(--shadow);
-  padding: 5em 3em;
+  padding: 5em 2.5em;
 }
 .side-bar[data-state="open"] {
   animation: slideLeft .2s var(--animation-fn);
@@ -124,13 +124,8 @@ header button.open-menu::after {
   background-color: #c1c1c1;
   border-radius: 18%;
 }
-.side-bar__body li > a {
-  display: flex;
-  align-items: center;
-  gap: .5em;
-}
 .side-bar svg {
-  width: 1.1em;
+  width: 1em;
 }
 .side-bar svg > path {
   fill: inherit;

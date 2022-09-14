@@ -8,6 +8,7 @@
   width: max-content;
   max-height: 20em;
   overflow: auto;
+  left: -1em;
 }
 .dropdown__body[data-state="open"] {
   animation: slideDownAndFade .2s var(--animation-fn);

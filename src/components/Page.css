@@ -68,13 +68,12 @@ main .product__price {
   font-weight: bold;
   font-size: 1.3rem;
 }
-@media screen and (min-width: 32.5em) {
+@media screen and (min-width: 23.43em) {
   main .product-container {
     grid-template-columns: repeat(2, minmax(10em, 1fr));
+    column-gap: 1em;
   }
-  main .product-end {
-    flex-wrap: nowrap;
-  }
+  
   main .product:nth-child(2n) {
     margin-top: -4em; /* layout hack */
   }
