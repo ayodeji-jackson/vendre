@@ -23,7 +23,7 @@ type DropdownMenuType = {
 };
 
 const DropdownMenu = ({ name, value, items, onValueChange }: DropdownMenuType) => (
-  <Root>
+  <Root modal={false}>
     <Trigger asChild>
       <button type="button" className='dropdown__button centered button'>
         { name } <AngleIcon />

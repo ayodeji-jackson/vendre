@@ -24,8 +24,7 @@ const Page = ({ title, urls, icon }:
     ).then(responses => Promise.all(responses.map(res => res.json()))
       .then(values => setProducts(values.flat())))
       .catch(err => setFetchError(true));
-  }, []);
-  console.log(urls);
+  }, [products]);
 
   return (
     !urls.length ? 

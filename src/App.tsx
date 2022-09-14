@@ -43,6 +43,12 @@ const App = () => {
             <Page title="Wishlist" icon={ <HeartIcon /> }
               urls={ wishlist.get().map(id => `${PAGE_URL}/${id}`) } />
           } />
+          <Route path="/mens-clothing" element={
+            <Page title="Men's Clothing" urls={ [`${PAGE_URL}/category/men's%20clothing`] } />
+          } />
+          <Route path="/womens-clothing" element={
+            <Page title="Women's Clothing" urls={ [`${PAGE_URL}/category/women's%20clothing`] } />
+          } />
         </Routes>
       </ToastProvider>
     </BrowserRouter>

@@ -76,7 +76,7 @@ const Header = () => {
           <li><Link to="/sale" className="cta-link">Sale 🔥</Link></li>
         </ul>
       </nav>
-      <Popover.Root>
+      <Popover.Root modal={true}>
         <Popover.Anchor className='anchor' />
         <Popover.Trigger asChild>
           <button type="button" className="open-menu icon-button">
@@ -95,7 +95,7 @@ const Header = () => {
           </Popover.Content>
         </Popover.Portal>
       </Popover.Root>
-      <Popover.Root>
+      <Popover.Root modal={true}>
         <Popover.Anchor className='anchor' />
         <Popover.Trigger asChild>
         <button type="button" className="open-cart" title='Open cart'>

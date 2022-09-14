@@ -44,7 +44,7 @@ const CartItem = ({ product }: { product: ProductType }) => {
           <button onClick={ () => handleAddToCart(-1) } type="button"
             disabled={ productCartCount === 1 } className="centered"
           >-</button>
-          <label>{ productCartCount }</label>
+          <p>{ productCartCount }</p>
           <button onClick={ () => handleAddToCart(1) } className="centered"
             type="button" disabled={ productCartCount >= product.stock! }
           >+</button>

@@ -13,14 +13,16 @@ const FilterBanner = ({ products }: { products: ProductType[] }) => {
   const capitalize = (word: string) => {
     return word[0].toUpperCase() + word.slice(1);
   };
-  const minPrice = Math.min(...products.map(({ price }) => price));
-  const maxPrice = Math.max(...products.map(({ price }) => price));
+  let minPrice = 0;
+  let maxPrice = 1000;
   const categories = Array.from(new Set(products.map(({ category }) => category)));
   // const brands = Array.from(new Set(products.map(({ brand }) => brand)));
 
   useEffect(() => {
+    minPrice = Math.min(...products.map(({ price }) => price));
+    maxPrice = Math.max(...products.map(({ price }) => price));
     filterState.set({ ...filterState.attach(Downgraded).get(), range: [minPrice, maxPrice]});
-  }, []);
+  }, [filterState]);
   
   return (
   <form className="filter-banner">

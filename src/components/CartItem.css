@@ -18,8 +18,11 @@
   justify-content: center;
 }
 .cart-item__price, 
-.cart-item :last-child > label {
+.product__amount-in-cart-control > p {
   color: var(--color);
+}
+.cart-item__price {
+  font-weight: bold;
 }
 .cart-item__row-2 {
   display: flex;
