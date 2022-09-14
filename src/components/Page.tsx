@@ -7,34 +7,32 @@ import * as Toast from '@radix-ui/react-toast';
 import { useHookstate } from "@hookstate/core";
 import { filterGlobalState } from "../App";
 
-const Page = ({ title, productsUrl }: 
-    { title: string, productsUrl: string 
+const Page = ({ title, urls, icon }: 
+    { title: string, urls: string[], icon?: JSX.Element 
   }) => {
   const [ products, setProducts ] = useState([] as ProductType[]);
-  const [ refetchedProducts, setRefetchedProducts ] = useState([] as ProductType[]);
   const [ fetchError, setFetchError ] = useState(false);
   const [ minPrice, maxPrice ] = useHookstate(filterGlobalState).get().range;
   const categoryFilter = useHookstate(filterGlobalState).get().category;
-  const brandFilter = useHookstate(filterGlobalState).get().brand;
+  // const brandFilter = useHookstate(filterGlobalState).get().brand;
   const priceFilter = useHookstate(filterGlobalState).get().price;
   const isLoading: boolean = !Boolean(Object.keys(products).length);
 
   useEffect(() => {
-    fetch(productsUrl)
-      .then(res => res.json())
-        .then(data => setProducts(data.products))
-          .catch(() => setFetchError(true));
+    Promise.all(
+      urls.map(url => fetch(url))
+    ).then(responses => Promise.all(responses.map(res => res.json()))
+      .then(values => setProducts(values.flat())))
+      .catch(err => setFetchError(true));
   }, []);
-
-  useEffect(() => {
-    setRefetchedProducts([] as ProductType[]);
-    fetch(productsUrl)
-      .then(res => res.json())
-        .then(data => setRefetchedProducts(data.products))
-          .catch(() => setFetchError(true));
-  }, [productsUrl]);
+  console.log(urls);
 
   return (
+    !urls.length ? 
+    <div className="empty-page-message centered">
+      { icon }
+      <p>No items in { title }</p>
+    </div> : 
     <>
       { isLoading ? 
         <FilterBannerSkeleton /> :
@@ -59,11 +57,11 @@ const Page = ({ title, productsUrl }:
         <h2 className="heading">{ title }</h2>
         <ul className="product-container">
           { isLoading ? 
-            ' '.repeat(10).split('').map((_, i) => (<ProductSkeleton key={ i } />)) :
-            refetchedProducts
+            [...Array(10)].map((_, i) => (<ProductSkeleton key={ i } />)) :
+            products
               .filter(({ category }) => categoryFilter.length ? category === categoryFilter : true)
               .filter(({ price }) => price >= minPrice && price <= maxPrice)
-              .filter(({ brand }) => brandFilter.length ? brand === brandFilter : true)
+              // .filter(({ brand }) => brandFilter.length ? brand === brandFilter : true)
               .sort((a, b) => priceFilter === 'asc' ? a.price - b.price : priceFilter === 'desc' ? b.price - a.price : 0)
               .map((prod: ProductType) => (
                 <Product key={ prod.id }

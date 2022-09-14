@@ -32,13 +32,13 @@ const Product = ({ product }: { product: ProductType }) => {
 
   return (
     <li className="product">
-      <button type="button" title="Add to wishlist" 
+      <button type="button" title={isLiked ? "Remove from wishlist" : "Add to wishlist"} 
         onClick={ handleLike }
         className={ `product__add-to-wishlist centered ${isLiked ? 'is-liked' : ''}` }
       >
         <HeartIcon />
       </button>
-      <img alt={ product.title } src={ product.thumbnail } className="product__image" />
+      <img alt={ product.title } src={ product.image } className="product__image" />
       <p className="product__name">{ product.title }</p>
       <div className="product-end">
         <p className="product__price">${ product.price.toLocaleString() }</p>
@@ -47,7 +47,7 @@ const Product = ({ product }: { product: ProductType }) => {
             <button onClick={ () => handleAddToCart(-1) } type="button"
               className="centered"
             >-</button>
-            <label>{ productCartCount }</label>
+            <p>{ productCartCount }</p>
             <button onClick={ () => handleAddToCart(1) } className="centered"
               type="button" disabled={ productCartCount >= product.stock! }
             >+</button>

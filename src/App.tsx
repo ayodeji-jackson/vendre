@@ -4,8 +4,10 @@ import { cartItemType } from './types';
 import { Downgraded, hookstate, useHookstate } from '@hookstate/core';
 import { useEffect } from 'react';
 import { ToastProvider, ToastViewport } from '@radix-ui/react-toast';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HeartIcon } from './assets/icons';
 
-export const PAGE_URL = "https://dummyjson.com/products";
+export const PAGE_URL = "https://fakestoreapi.com/products";
 
 export const cartGlobalState = hookstate(
   (JSON.parse(localStorage.getItem('cart')!) || []) as cartItemType[]
@@ -20,7 +22,6 @@ export const filterGlobalState = hookstate({
 const App = () => {
   const cart = useHookstate(cartGlobalState);
   const wishlist = useHookstate(wishlistGlobalState);
-  const filters = useHookstate(filterGlobalState);
 
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart.attach(Downgraded).get()));
@@ -30,15 +31,21 @@ const App = () => {
   }, [wishlist]);
 
   return (
-    <ToastProvider swipeDirection='right'>
-      <ToastViewport className="toast centered" />
-      <Header />
-      <Page title="New Arrivals"
-        productsUrl={ 
-          `${PAGE_URL}${filters.get().search ? `/search?q=${filters.get().search}&` : '?'}select=thumbnail,title,price,category,brand,stock` 
-        } 
-      />
-    </ToastProvider>
+    <BrowserRouter>
+      <ToastProvider swipeDirection='right'>
+        <ToastViewport className="toast centered" />
+        <Header />
+        <Routes>
+          <Route path="/" element={
+            <Page title="New Arrivals" urls={ [PAGE_URL] } />
+          } />
+          <Route path="/wishlist" element={
+            <Page title="Wishlist" icon={ <HeartIcon /> }
+              urls={ wishlist.get().map(id => `${PAGE_URL}/${id}`) } />
+          } />
+        </Routes>
+      </ToastProvider>
+    </BrowserRouter>
   );
 }
 

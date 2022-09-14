@@ -5,8 +5,9 @@ import { Downgraded, useHookstate } from '@hookstate/core';
 import { cartGlobalState, filterGlobalState } from '../App';
 import CartItem, { CartItemSkeleton } from './CartItem';
 import { PAGE_URL } from '../App';
-import { ProductType } from '../types';
+import { cartItemType, ProductType } from '../types';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Header = () => { 
   const cartState = useHookstate(cartGlobalState);
@@ -17,25 +18,27 @@ const Header = () => {
 
   let isLoading: boolean = !Boolean(Object.keys(products).length);
 
-  const getProducts = () => {
+  const getProducts = (urlArray: cartItemType[]) => {
     Promise.all(
-      cartState.attach(Downgraded).get()
+      urlArray
         .map(({ id }) => fetch(`${PAGE_URL}/${id}`))
     ).then(responses => Promise.all(responses.map(res => res.json()))
       .then(values => setProducts(values)))
       .catch(err => console.error);
-  }
+  };
 
-  useEffect(getProducts, []);
+  useEffect(() => getProducts(cartState.attach(Downgraded).get()), []);
 
   useEffect(() => {
     // syncing cart global state with product local state
+    const cart = cartState.attach(Downgraded).get();
     setProducts(
       products.filter(({ id }) => 
-        cartState.attach(Downgraded).get().findIndex(item => item.id === id) !== -1
+        cart.findIndex(item => item.id === id) !== -1
       )
     );
-    getProducts();
+
+    getProducts(cart);
   }, [cartState]);
 
   const getTotal = (products: ProductType[]): number => {
@@ -66,10 +69,12 @@ const Header = () => {
       <p className="info centered">Check Vendre app</p>
       <h1 className="logo centered">Vendre.</h1>
       <nav>
-        <a href="#">New collection</a>
-        <a href="#">Men</a>
-        <a href="#">Women</a>
-        <a href="#" className="cta-link">Sale 🔥</a>
+        <ul>
+          <li><Link to="/">New collection</Link></li>
+          <li><Link to="/mens-clothing">Men</Link></li>
+          <li><Link to="/womens-clothing">Women</Link></li>
+          <li><Link to="/sale" className="cta-link">Sale 🔥</Link></li>
+        </ul>
       </nav>
       <Popover.Root>
         <Popover.Anchor className='anchor' />
@@ -84,7 +89,7 @@ const Header = () => {
               Menu<Popover.Close aria-label='close'><span aria-hidden="true">✕</span></Popover.Close>
             </h2>
             <ul className='side-bar__body'>
-              <li><a href="#"><HeartIcon />Wishlist</a></li>
+              <li><Link to="/wishlist"><HeartIcon />Wishlist</Link></li>
               <li><a href="#"><span>🔥</span>Sale</a></li>
             </ul>
           </Popover.Content>
@@ -105,16 +110,22 @@ const Header = () => {
             <h2 className="side-bar__heading">
               Cart<Popover.Close aria-label='close'><span aria-hidden="true">✕</span></Popover.Close>
             </h2>
-            <ul className="side-bar__body">
-              { isLoading ? 
-                ' '.repeat(cartState.get().length).split('').map((_, i) => (<CartItemSkeleton key={ i } />)) :
-                products.map(product => (
-                  <CartItem key={ product.id }
-                    product={ product } 
-                  />
-                ))
-              }
-            </ul>
+            { cartState.get().length ? 
+              <ul className="side-bar__body">
+                { isLoading ? 
+                  [...Array(cartState.get().length)].map((_, i) => (<CartItemSkeleton key={ i } />)) :
+                  products.map(product => (
+                    <CartItem key={ product.id }
+                      product={ product } 
+                    />
+                  ))
+                }
+              </ul> : 
+              <span className='cart-empty'>
+                <CartIcon />
+                <p>Your cart is empty</p>
+              </span>
+            }
             { !isLoading && 
               <button className="checkout button">
                 Checkout (${ getTotal(products) })

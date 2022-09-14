@@ -19,6 +19,10 @@
   opacity: .6;
 }
 
+.product-skeleton {
+  gap: 1em;
+  justify-content: unset;
+}
 .product-skeleton *, .product-skeleton *::after {
   background-color: var(--skeleton-bg);
   animation: var(--skeleton-animation);

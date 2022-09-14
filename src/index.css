@@ -1,16 +1,8 @@
-@font-face {
-  font-family: ProductSans;
-  src: url('./assets/fonts/ProductSansRegular.ttf');
-}
-@font-face {
-  font-family: ProductSans;
-  src: url('./assets/fonts/ProductSansBold.ttf');
-  font-weight: bold;
-}
+@import url('https://fonts.googleapis.com/css2?family=Sen:wght@400;700&display=swap');
 
 :root {
   box-sizing: border-box;
-  font-family: ProductSans, sans-serif;
+  font-family: 'Sen', sans-serif;
   --border: 1px solid silver;
   --skeleton-bg: rgb(143, 143, 143);
   --skeleton-animation: 1.5s pulsate ease infinite;
@@ -113,7 +105,8 @@ button[aria-label="close"]:focus {
   z-index: 200;
 }
 .toast__body {
-  position: static;
+  position: sticky;
+  top: 0;
   display: flex;
   flex-wrap: wrap;
   align-items: center;

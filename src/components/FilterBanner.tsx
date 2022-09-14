@@ -16,7 +16,7 @@ const FilterBanner = ({ products }: { products: ProductType[] }) => {
   const minPrice = Math.min(...products.map(({ price }) => price));
   const maxPrice = Math.max(...products.map(({ price }) => price));
   const categories = Array.from(new Set(products.map(({ category }) => category)));
-  const brands = Array.from(new Set(products.map(({ brand }) => brand)));
+  // const brands = Array.from(new Set(products.map(({ brand }) => brand)));
 
   useEffect(() => {
     filterState.set({ ...filterState.attach(Downgraded).get(), range: [minPrice, maxPrice]});
@@ -55,7 +55,7 @@ const FilterBanner = ({ products }: { products: ProductType[] }) => {
           <Slider.Thumb style={ styles.sliderThumbStyles } />
         </Slider.Root>
       </label>
-      <Dropdown name="Brand" onValueChange={ 
+      {/* <Dropdown name="Brand" onValueChange={ 
           value => filterState.set({ ...filterState.attach(Downgraded).get(), brand: value }) 
         } 
         value={ filterState.get().brand }
@@ -63,7 +63,7 @@ const FilterBanner = ({ products }: { products: ProductType[] }) => {
           return { name: capitalize(brand), value: brand }
         }) ]
         } 
-      />
+      /> */}
     </div>
     <Dropdown name="Sort by price" 
       value={ filterState.get().price } onValueChange={ 

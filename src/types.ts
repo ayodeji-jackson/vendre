@@ -3,7 +3,7 @@ export type cartItemType = {
 };
 
 export type ProductType = {
-  brand: string, 
+  // brand: string, 
   category: string, 
   description?: string, 
   discountPercentage?: number, 
@@ -12,6 +12,7 @@ export type ProductType = {
   price: number, 
   rating?: number, 
   stock?: number, 
-  thumbnail: string, 
+  // thumbnail: string, 
+  image: string,
   title: string
 };

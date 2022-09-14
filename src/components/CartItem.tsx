@@ -30,10 +30,10 @@ const CartItem = ({ product }: { product: ProductType }) => {
   return (
     <li className='cart-item'>
       <div className="cart-item__row-1">
-        <img className='cart-item__image' src={ product.thumbnail } alt={ product.title } />
+        <img className='cart-item__image' src={ product.image } alt={ product.title } />
         <div className='cart-item__text'>
           <p className='cart-item__title'>{ product.title }</p>
-          <p className='cart-item__price'>${ product.price }</p>
+          <p className='cart-item__price'>${ product.price.toLocaleString() }</p>
         </div>
       </div>
       <div className='cart-item__row-2'>

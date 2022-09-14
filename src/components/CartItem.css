@@ -8,7 +8,8 @@
   gap: 2em;
 }
 .cart-item__image {
-  width: 50%;
+  width: 20%;
+  /* height: 10%; */
 }
 .cart-item__text {
   display: flex;
