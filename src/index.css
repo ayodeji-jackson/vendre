@@ -110,9 +110,12 @@ button[aria-label="close"]:focus {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  width: clamp(20vw, 20rem, calc(100vw - 4em));
+  width: clamp(20vw, 25rem, calc(100vw - 4em));
   justify-content: space-between;
   padding: 1.5em 1em;
+}
+@media screen and (min-width: 16.125em) {
+  .toast__body { flex-wrap: nowrap }
 }
 .toast__body[data-state="open"] {
   animation: toastSlideDown .2s var(--animation-fn);
@@ -130,9 +133,11 @@ button[aria-label="close"]:focus {
 .toast__body[data-swipe="end"] {
   animation: swipeRight .2s ease-out;
 }
-.toast__body .centered {
+.toast__body > .centered {
   gap: 1em;
-  flex-wrap: wrap;
+}
+.toast__button {
+  margin-left: auto;
 }
 svg {
   width: 1.5rem;

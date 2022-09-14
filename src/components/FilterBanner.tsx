@@ -13,16 +13,14 @@ const FilterBanner = ({ products }: { products: ProductType[] }) => {
   const capitalize = (word: string) => {
     return word[0].toUpperCase() + word.slice(1);
   };
-  let minPrice = 0;
-  let maxPrice = 1000;
+  const minPrice = Math.min(...products.map(({ price }) => price));
+  const maxPrice = Math.max(...products.map(({ price }) => price));
   const categories = Array.from(new Set(products.map(({ category }) => category)));
   // const brands = Array.from(new Set(products.map(({ brand }) => brand)));
 
   useEffect(() => {
-    minPrice = Math.min(...products.map(({ price }) => price));
-    maxPrice = Math.max(...products.map(({ price }) => price));
     filterState.set({ ...filterState.attach(Downgraded).get(), range: [minPrice, maxPrice]});
-  }, [filterState]);
+  }, [products]);
   
   return (
   <form className="filter-banner">
@@ -43,11 +41,12 @@ const FilterBanner = ({ products }: { products: ProductType[] }) => {
         } 
       />
       <label className='price-range'>
-        Price range: ${ filterState.attach(Downgraded).get().range[0] }
-        -${ filterState.attach(Downgraded).get().range[1] }
+        Price range: ${ filterState.get().range[0] }
+        -${ filterState.get().range[1] }
         <Slider.Root className="range-input" aria-label="price range" 
           onValueChange={ value => filterState.set({ ...filterState.get(), range: value }) }
-          min={ minPrice } max={ maxPrice } step={ 50 } minStepsBetweenThumbs={ 1 }
+          value={ [filterState.get().range[0], filterState.get().range[1]] }
+          min={ minPrice } max={ maxPrice } step={ 1 } minStepsBetweenThumbs={ 1 }
           defaultValue={[ minPrice, maxPrice ]} style={ styles.sliderRootStyles }
         >
           <Slider.Track style={ styles.sliderTrackStyles }>
