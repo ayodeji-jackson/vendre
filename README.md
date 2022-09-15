@@ -1,5 +1,5 @@
 # Vendre.
-e-commerce web app. Bringing the design i found on [dribbble](https://dribbble.com/) to life with some stuff. Live on vercel @ https://vendre-weld.vercel.app/
+e-commerce web app. Bringing the design i found on [dribbble](https://dribbble.com/) to life with stuff. Live on vercel @ https://vendre-weld.vercel.app/
 
 ## design
 ![ecommerce web design](https://user-images.githubusercontent.com/71940927/188655013-828291fe-88b4-4644-921a-9cb6404652be.gif)
@@ -17,7 +17,7 @@ e-commerce web app. Bringing the design i found on [dribbble](https://dribbble.c
 ## API
 [Fake store API](https://fakestoreapi.com/)
 
-## stuff used
+## stuff
 <a href="https://vitejs.dev/" target="_blank" rel="noopener noreferrer">
   <img src="https://vitejs.dev/logo.svg" alt="Vite logo" height="32" width="32" />
 </a>
