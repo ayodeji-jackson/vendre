@@ -7,6 +7,7 @@ e-commerce web app. Bringing the design i found on [dribbble](https://dribbble.c
 
 ## features
 - [ ] PWA
+- [ ] Dark mode
 - [x] Filter by category, price range, search phrase
 - [x] Sort by price
 - [x] Add to wishlist
@@ -18,11 +19,11 @@ e-commerce web app. Bringing the design i found on [dribbble](https://dribbble.c
 
 ## stuff used
 <a href="https://vitejs.dev/" target="_blank" rel="noopener noreferrer">
-  <img src="https://vitejs.dev/logo.svg" alt="Vite logo" />
+  <img src="https://vitejs.dev/logo.svg" alt="Vite logo" height="32" width="32" />
 </a>
 <a href="https://radix-ui.com/" target="_blank" rel="noopener noreferrer">
-  <img src="https://radix-ui.com/favicon.svg" alt="Radix UI logo" />
+  <img src="https://radix-ui.com/favicon.svg" alt="Radix UI logo" height="32" width="32" />
 </a>
 <a href="https://hookstate.js.org/" target="_blank" rel="noopener noreferrer">
-  <img src="https://hookstate.js.org/img/favicon-32.png" alt="Hookstate logo" />
+  <img src="https://hookstate.js.org/img/favicon-32.png" alt="Hookstate logo" height="32" width="32" />
 </a>
