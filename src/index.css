@@ -29,11 +29,9 @@ ul {
   list-style-type: none;
 }
 a {
-  cursor: pointer;
-}
-a {
   position: relative;
   outline-offset: 3px;
+  cursor: pointer;
 }
 a::after {
   position: absolute;
@@ -61,6 +59,10 @@ button > span.icon {
 }
 input:not([type="radio"], [type="checkbox"]) {
   font-size: .9rem;
+}
+.logo-link {
+  all: unset;
+  cursor: pointer;
 }
 .cta-link {
   font-weight: bold;

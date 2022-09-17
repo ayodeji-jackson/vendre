@@ -28,27 +28,25 @@ const Header = () => {
 
   let isLoading: boolean = !Boolean(Object.keys(products).length);
 
-  const getProducts = (urlArray: cartItemType[]) => {
+  const getProducts = (cart: cartItemType[]) => {
     Promise.all(
-      urlArray
+      cart
         .map(({ id }) => fetch(`${PAGE_URL}/${id}`))
     ).then(responses => Promise.all(responses.map(res => res.json()))
       .then(values => setProducts(values)))
       .catch(err => console.error);
   };
 
-  useEffect(() => getProducts(cartState.attach(Downgraded).get()), []);
-
   useEffect(() => {
-    // syncing cart global state with product local state
+    setProducts([]);
     const cart = cartState.attach(Downgraded).get();
+    getProducts(cart);
+    // syncing cart global state with product local state
     setProducts(
       products.filter(({ id }) => 
         cart.findIndex(item => item.id === id) !== -1
       )
     );
-
-    getProducts(cart);
   }, [cartState]);
 
   const getTotal = (products: ProductType[]): string => {
@@ -77,7 +75,7 @@ const Header = () => {
         </Popover.Portal>
       </Popover.Root>
       <p className="info centered">Check Vendre app</p>
-      <h1 className="logo centered">Vendre.</h1>
+      <h1 className="logo centered"><Link to="/" className='logo-link'>Vendre.</Link></h1>
       <nav>
         <ul>
           <NavLinks orientation='horizontal' />

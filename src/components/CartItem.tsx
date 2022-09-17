@@ -57,8 +57,17 @@ const CartItem = ({ product }: { product: ProductType }) => {
 export default CartItem;
 
 export const CartItemSkeleton = () => (
-  <li className='cart-item-skeleton'>
-    <div className='cart-item-skeleton__image'></div>
-    <span className='cart-item-skeleton__text'></span>
+  <li className='cart-item-skeleton cart-item'>
+    <div className='cart-item__row-1'>
+      <div className='cart-item__image'></div>
+      <div className='cart-item__text'>
+        <span className='cart-item__title'></span>
+        <span className='cart-item__price'></span>
+      </div>
+    </div>
+    <div className='cart-item__row-2'>
+      <span className='cart-item__remove'></span>
+      <span className='product__amount-in-cart-control'></span>
+    </div>
   </li>
 );

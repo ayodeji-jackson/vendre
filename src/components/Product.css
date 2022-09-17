@@ -23,20 +23,20 @@
   gap: 1em;
   justify-content: unset;
 }
-.product-skeleton *, .product-skeleton *::after {
+.product-skeleton *:not(.product-end) {
   background-color: var(--skeleton-bg);
   animation: var(--skeleton-animation);
 }
-.product-skeleton .product__text {
-  position: relative;
-  width: calc(100% - 4em);
+.product-skeleton .product__name {
+  width: calc(100% - 2em);
   height: 1em;
 }
-.product-skeleton .product__text::after {
-  position: absolute;
-  content: '';
-  width: 20%;
-  height: inherit;
-  bottom: -1.3em;
-  left: 0;
+.product-skeleton .product-end > * {
+  height: 1.3em;
+}
+.product-skeleton .product__price {
+  width: 4em;
+}
+.product-skeleton .product__add-to-cart-button {
+  width: 4em;
 }

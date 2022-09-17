@@ -66,6 +66,10 @@ export default Product;
 export const ProductSkeleton = () => (
   <li className="product product-skeleton" hidden>
     <div className="product__image"></div>
-    <p className="product__text"></p>
+    <span className="product__name"></span>
+    <div className="product-end">
+      <span className="product__price"></span>
+      <span className="product__add-to-cart-button"></span> 
+    </div>
   </li>
 );
