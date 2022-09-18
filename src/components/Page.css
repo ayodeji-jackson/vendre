@@ -68,6 +68,7 @@ main .product-end {
 main .product__price {
   user-select: none;
   font-weight: bold;
+  margin-right: .5em;
 }
 main .product__add-to-cart {
   font-size: .8rem;
