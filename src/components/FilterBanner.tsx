@@ -6,6 +6,7 @@ import Dropdown from './Dropdown';
 import { filterGlobalState } from '../App';
 import { Downgraded, useHookstate } from '@hookstate/core';
 import { ProductType } from '../types';
+import { MinusIcon, PlusIcon } from '../assets/icons';
 
 const FilterBanner = ({ products }: { products: ProductType[] }) => {
   const [ isExpanded, setExpanded ] = useState(false);
@@ -28,7 +29,7 @@ const FilterBanner = ({ products }: { products: ProductType[] }) => {
       className='centered button' type="button"
     >
       { isExpanded ? 'Close' : 'Open' } filter 
-      <span className='icon' aria-hidden="true">{ isExpanded ? '-' : '+' }</span>
+      <span aria-hidden="true" className='icon centered'>{ isExpanded ? <MinusIcon /> : <PlusIcon /> }</span>
     </button>
     <div className={ `more-filters overlay ${isExpanded ? '' : 'is-closed'}` }>
       <Dropdown name="Categories" onValueChange={ 
@@ -41,8 +42,8 @@ const FilterBanner = ({ products }: { products: ProductType[] }) => {
         } 
       />
       <label className='price-range'>
-        Price range: ${ filterState.get().range[0] }
-        -${ filterState.get().range[1] }
+        <span>Price range: ${ filterState.get().range[0] }
+        -${ filterState.get().range[1] }</span>
         <Slider.Root className="range-input" aria-label="price range" 
           onValueChange={ value => filterState.set({ ...filterState.get(), range: value }) }
           value={ [filterState.get().range[0], filterState.get().range[1]] }

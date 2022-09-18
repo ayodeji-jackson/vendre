@@ -1,5 +1,5 @@
 main {
-  padding: 2em;
+  padding: 2em var(--padding-x);
 }
 main .product-container {
   display: grid;
@@ -10,14 +10,14 @@ main .heading {
   font-size: 1.5rem;
   height: auto;
   margin-bottom: 1.5em;
+  margin-left: .5em;
 }
 main :where(.product) {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 1em;
-  border: var(--border);
-  height: 25em;
+  height: 17em;
 }
 main .product__add-to-wishlist {
   --size: 1.8rem;
@@ -45,61 +45,47 @@ main .product__add-to-wishlist.is-liked > svg > path {
     .3s linear stroke;
 }
 main .product__image {
-  display: block;
+  user-select: none;
   max-width: 100%;
-  height: 60%;
+  height: 45%;
   object-fit: contain;
 }
 main .product__name {
+  font-size: .9rem;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 main .product-end {
   color: var(--color);
-  margin-top: 2em;
+  margin-top: 1em;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  gap: 1em;
+  gap: .5em;
 }
 main .product__price {
+  user-select: none;
   font-weight: bold;
-  font-size: 1.3rem;
+  padding: 0 0 0 .5em;
+}
+main .product__add-to-cart {
+  font-size: .8rem;
 }
 @media screen and (min-width: 23.43em) {
-  main {
-    padding-left: 0;
-    padding-right: 0;
-  }
-  main .heading {
-    width: 200px;
-    margin-left: 1em;
+  main :where(.product) {
+    border: var(--border);
   }
   main .product-container {
-    grid-template-columns: repeat(2, minmax(10em, 1fr));
+    grid-template-columns: repeat(2, minmax(calc((100% - 2 * var(--padding-x) - 1em) / 2), 1fr));
     column-gap: 1em;
   }
   main .product:nth-child(2n) {
     margin-top: -4em; /* layout hack */
   }
 }
-@media screen and (min-width: 32.5em) {
-  main {
-    padding: 2em;
-  }
-  main .heading {
-    width: initial;
-    margin-left: initial;
-  }
-}
 @media screen and (min-width: 48em) {
-  main {
-    --padding: calc(.5em + 5vw);
-    padding-left: var(--padding);
-    padding-right: var(--padding);
-  }
   main .product-container {
     grid-template-columns: repeat(auto-fit, minmax(20em, 1fr));
   }
@@ -111,7 +97,10 @@ main .product__price {
     border: none;
   }
   main .heading {
-    width: 100%;
+    font-size: 2rem;
+  }
+  main .product__price {
+    font-size: 1.5rem;
   }
   main .product-end {
     margin-top: 0;

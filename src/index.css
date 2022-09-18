@@ -8,6 +8,7 @@
   --skeleton-animation: 1.5s pulsate ease infinite;
   --shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
   --color: #bc7d40;
+  --padding-x: calc(.1em + 5vw);
   --button-bg-color: white;
   --animation-fn: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -50,12 +51,17 @@ button {
   font-size: .9rem;
   background-color: var(--button-bg-color);
 }
+button {
+  user-select: none;
+}
 :where(button:hover, button:focus) {
   --button-bg-color: rgba(221, 221, 221, 0.3);
 }
 button > span.icon {
-  font-size: 1.5rem;
   margin-left: .5em;
+}
+button > span.icon > svg {
+  width: 1.1rem;
 }
 input:not([type="radio"], [type="checkbox"]) {
   font-size: .9rem;

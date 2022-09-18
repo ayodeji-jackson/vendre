@@ -46,7 +46,7 @@ header nav {
 }
 header .logo {
   padding: .5em 2em;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   text-transform: uppercase;
   width: 100%;
 }
@@ -65,13 +65,13 @@ header button.open-menu::before, ::after {
 }
 header button.open-menu::before {
   top: 45%;
-  height: .2em;
+  height: 2px;
   width: 2em;
   background-color: black;
 }
 header button.open-menu::after {
   top: calc(45% + .5em);
-  height: .2em;
+  height: 2px;
   width: 1.5em;
   background-color: black;
 }
@@ -86,7 +86,7 @@ header button.open-menu::after {
   z-index: 2;
   right: 0;
   box-shadow: var(--shadow);
-  padding: 5em 2.5em;
+  padding: 5em var(--padding-x);
 }
 .side-bar[data-state="open"] {
   animation: slideLeft .2s var(--animation-fn);
@@ -137,6 +137,7 @@ header button.open-cart {
   border-top: var(--border);
 }
 span.cart-count {
+  user-select: none;
   position: absolute;
   border: 3px solid var(--button-bg-color);
   left: 50%;
@@ -171,7 +172,7 @@ span.cart-count {
   header .logo {
     padding-left: 0;
     padding-right: 0;
-    width: calc(9rem - 1px); /* this is a hack. idk why it is 1px too big */
+    width: 8rem;
   }
   header button.open-menu, 
   header button.open-cart {
@@ -186,6 +187,9 @@ span.cart-count {
   }
 }
 @media screen and (min-width: 48em) {
+  header .logo {
+    width: calc(9rem - 1px); /* this is a hack. idk why it is 1px too big */
+  }
   header button.open-search {
     display: initial;
     background-color: var(--button-bg-color);

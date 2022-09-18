@@ -2,7 +2,7 @@
   position: relative;
   display: flex;
   justify-content: space-between;
-  padding: 1em 2em;
+  padding: 1em var(--padding-x);
   border-top: var(--border);
   border-bottom: var(--border);
   align-items: center;
@@ -21,9 +21,10 @@ label.price-range {
   flex-wrap: wrap;
   gap: .5em;
   padding: .5em;
+  align-items: center;
 }
-label.price-range .range-input {
-  margin-left: calc(1vw + 1em);
+label.price-range :first-child {
+  margin-right: calc(1vw + 1em);
 }
 @media screen and (min-width: 18.5em) {
   div.more-filters {
@@ -57,5 +58,6 @@ div.is-closed {
   background-color: var(--skeleton-bg);
   animation: var(--skeleton-animation);
   width: 4.5em;
-  height: 2em;
+  height: 1.5em;
+  border-radius: .2em;
 }

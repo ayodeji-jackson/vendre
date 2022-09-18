@@ -2,11 +2,13 @@ import { HeartIcon } from "../assets/icons";
 import { ProductType, cartItemType } from "../types";
 import './Product.css';
 import { Downgraded, useHookstate } from "@hookstate/core";
-import { cartGlobalState, wishlistGlobalState } from "../App";
+import { cartGlobalState, PAGE_URL, wishlistGlobalState } from "../App";
+import { globalFetchError } from "./Page";
 
 const Product = ({ product }: { product: ProductType }) => {
   const wishlistState = useHookstate(wishlistGlobalState);
   const cartState = useHookstate(cartGlobalState);
+  const fetchError = useHookstate(globalFetchError);
 
   const cleanCart = (arr: cartItemType[]): cartItemType[] => {
     return [ ...new Map(arr.map(v => [v.id, v])).values() ]
@@ -25,9 +27,12 @@ const Product = ({ product }: { product: ProductType }) => {
   };
 
   const handleAddToCart = (val: number): void => {
-    cartState.set(cleanCart([ 
-      ...cartState.attach(Downgraded).get(), { id: product.id, count: productCartCount + val } 
-    ]));
+    fetch(`${PAGE_URL}/${product.id}`).then(() => 
+      cartState.set(cleanCart([ 
+        ...cartState.attach(Downgraded).get(), { id: product.id, count: productCartCount + val } 
+      ]))
+    )
+      .catch(err => fetchError.set(true));
   };
 
   return (
@@ -65,11 +70,12 @@ export default Product;
 
 export const ProductSkeleton = () => (
   <li className="product product-skeleton" hidden>
+    <span className="product__add-to-wishlist"></span>
     <div className="product__image"></div>
     <span className="product__name"></span>
     <div className="product-end">
       <span className="product__price"></span>
-      <span className="product__add-to-cart-button"></span> 
+      <span className="product__add-to-cart"></span> 
     </div>
   </li>
 );

@@ -4,15 +4,17 @@ import Product, { ProductSkeleton } from "./Product";
 import './Page.css';
 import { useEffect, useState } from "react";
 import * as Toast from '@radix-ui/react-toast';
-import { Downgraded, useHookstate } from "@hookstate/core";
+import { Downgraded, hookstate, useHookstate } from "@hookstate/core";
 import { filterGlobalState } from "../App";
+
+export const globalFetchError = hookstate(false);
 
 const Page = ({ title, urls, icon }: 
     { title: string, urls: string[], icon?: JSX.Element 
   }) => {
   const filterState = useHookstate(filterGlobalState);
   const [ products, setProducts ] = useState([] as ProductType[]);
-  const [ fetchError, setFetchError ] = useState(false);
+  const fetchError = useHookstate(globalFetchError);
   const [ minPrice, maxPrice ] = filterState.get().range;
   const categoryFilter = filterState.get().category;
   const searchFilter = filterState.get().search;
@@ -29,7 +31,7 @@ const Page = ({ title, urls, icon }:
       urls.map(url => fetch(url))
     ).then(responses => Promise.all(responses.map(res => res.json()))
       .then(values => setProducts(values.flat())))
-      .catch(err => setFetchError(true));
+      .catch(err => fetchError.set(true));
   }, [title]);
 
   return (
@@ -44,8 +46,8 @@ const Page = ({ title, urls, icon }:
         <FilterBanner products={ products } /> 
       }
       <main>
-        <Toast.Root className="overlay toast__body" open={ fetchError }
-          onOpenChange={ setFetchError }
+        <Toast.Root className="overlay toast__body" open={ fetchError.get() }
+          onOpenChange={ fetchError.set }
         >
           <Toast.Description>
             Something went wrong
