@@ -34,7 +34,7 @@ a {
   outline-offset: 3px;
   cursor: pointer;
 }
-a::after {
+a:not(.logo-link)::after {
   position: absolute;
   left: 0;
   bottom: -3px;
@@ -65,10 +65,6 @@ button > span.icon > svg {
 }
 input:not([type="radio"], [type="checkbox"]) {
   font-size: .9rem;
-}
-.logo-link {
-  all: unset;
-  cursor: pointer;
 }
 .cta-link {
   font-weight: bold;
