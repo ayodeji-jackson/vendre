@@ -1,14 +1,14 @@
 import { cartItemType, ProductType } from '../types';
-import { Downgraded, useHookstate } from '@hookstate/core';
-import { cartGlobalState } from '../App';
+import { CartContext } from '../Contexts';
 import './CartItem.css';
 import { TrashIcon } from '../assets/icons';
+import { useContext } from 'react';
 
 const CartItem = ({ product }: { product: ProductType }) => {
-  const cartState = useHookstate(cartGlobalState);
+  const { cartState, setCart } = useContext(CartContext);
 
   const productCartCount = 
-    cartState.get().find(item => item.id == product.id)?.count || 0;
+    cartState.find(item => item.id == product.id)?.count || 0;
 
   const cleanCart = (arr: cartItemType[]): cartItemType[] => {
     return [ ...new Map(arr.map(v => [v.id, v])).values() ]
@@ -16,15 +16,13 @@ const CartItem = ({ product }: { product: ProductType }) => {
   };
 
   const handleAddToCart = (val: number): void => {
-    cartState.set(cleanCart([ 
-      ...cartState.attach(Downgraded).get(), { id: product.id, count: productCartCount + val } 
+    setCart(cleanCart([ 
+      ...cartState, { id: product.id, count: productCartCount + val } 
     ]));
   };
   
   const removeFromCart = (): void => {
-    cartState.set(cleanCart([
-      ...cartState.attach(Downgraded).get(), { id: product.id, count: 0 }
-    ]));
+    setCart(cleanCart([...cartState, { id: product.id, count: 0 }]));
   }
 
   return (

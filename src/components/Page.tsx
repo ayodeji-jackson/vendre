@@ -2,36 +2,33 @@ import { ProductType } from "../types";
 import FilterBanner, { FilterBannerSkeleton } from "./FilterBanner";
 import Product, { ProductSkeleton } from "./Product";
 import './Page.css';
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import * as Toast from '@radix-ui/react-toast';
-import { Downgraded, hookstate, useHookstate } from "@hookstate/core";
-import { filterGlobalState } from "../App";
-
-export const globalFetchError = hookstate(false);
+import { FilterContext } from "../Contexts";
 
 const Page = ({ title, urls, icon }: 
     { title: string, urls: string[], icon?: JSX.Element 
   }) => {
-  const filterState = useHookstate(filterGlobalState);
+  const { filterState, setFilter } = useContext(FilterContext);
   const [ products, setProducts ] = useState([] as ProductType[]);
-  const fetchError = useHookstate(globalFetchError);
-  const [ minPrice, maxPrice ] = filterState.get().range;
-  const categoryFilter = filterState.get().category;
-  const searchFilter = filterState.get().search;
-  // const brandFilter = filterState.get().brand;
-  const priceFilter = filterState.get().price;
+  const [ fetchError, setFetchError ] = useState(false);
+  const [ minPrice, maxPrice ] = filterState.range;
+  const categoryFilter = filterState.category;
+  const searchFilter = filterState.search;
+  // const brandFilter = filterState.brand;
+  const priceFilter = filterState.price;
   const isLoading: boolean = !Boolean(Object.keys(products).length);
 
   useEffect(() => {
     setProducts([]);
-    filterState.set({...filterState.attach(Downgraded).get(), 
+    setFilter({...filterState, 
       category: '', brand: '', price: '', search: ''
     }); // reset filters
     Promise.all(
       urls.map(url => fetch(url))
     ).then(responses => Promise.all(responses.map(res => res.json()))
       .then(values => setProducts(values.flat())))
-      .catch(err => fetchError.set(true));
+      .catch(err => setFetchError(true));
   }, [title]);
 
   return (
@@ -46,8 +43,8 @@ const Page = ({ title, urls, icon }:
         <FilterBanner products={ products } /> 
       }
       <main>
-        <Toast.Root className="overlay toast__body" open={ fetchError.get() }
-          onOpenChange={ fetchError.set }
+        <Toast.Root className="overlay toast__body" open={ fetchError }
+          onOpenChange={ setFetchError }
         >
           <Toast.Description>
             Something went wrong
@@ -73,7 +70,7 @@ const Page = ({ title, urls, icon }:
               .sort((a, b) => priceFilter === 'asc' ? a.price - b.price : priceFilter === 'desc' ? b.price - a.price : 0)
               .map((prod: ProductType) => (
                 <Product key={ prod.id }
-                  product={ prod }
+                  product={ prod } setFetchError={ setFetchError }
                 />
               )
             )

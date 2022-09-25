@@ -1,12 +1,11 @@
 import './Header.css';
 import { SearchIcon, CartIcon, HeartIcon } from '../assets/icons';
 import * as Popover from '@radix-ui/react-popover';
-import { Downgraded, useHookstate } from '@hookstate/core';
-import { cartGlobalState, filterGlobalState } from '../App';
+import { CartContext, FilterContext } from '../Contexts';
 import CartItem, { CartItemSkeleton } from './CartItem';
 import { PAGE_URL } from '../App';
 import { cartItemType, ProductType } from '../types';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 const NavLinks = ({orientation, onClick}: {orientation: "horizontal" | "vertical", onClick?: () => void}) => (
@@ -19,10 +18,9 @@ const NavLinks = ({orientation, onClick}: {orientation: "horizontal" | "vertical
 );
 
 const Header = () => { 
-  const cartState = useHookstate(cartGlobalState);
-  const filterState = useHookstate(filterGlobalState);
-  const itemsInCart = cartState.attach(Downgraded).get()
-    .map(item => item.count).reduce((a, b) => a + b, 0);
+  const { cartState, setCart } = useContext(CartContext);
+  const { filterState, setFilter} = useContext(FilterContext);
+  const itemsInCart = cartState.map(item => item.count).reduce((a, b) => a + b, 0);
   const [ products, setProducts ] = useState([] as ProductType[]);
   const [ sideBarOpen, setSideBarOpen ] = useState(false);
 
@@ -39,12 +37,11 @@ const Header = () => {
 
   useEffect(() => {
     setProducts([]);
-    const cart = cartState.attach(Downgraded).get();
-    getProducts(cart);
+    getProducts(cartState);
     // syncing cart global state with product local state
     setProducts(
       products.filter(({ id }) => 
-        cart.findIndex(item => item.id === id) !== -1
+        cartState.findIndex(item => item.id === id) !== -1
       )
     );
   }, [cartState]);
@@ -52,7 +49,7 @@ const Header = () => {
   const getTotal = (products: ProductType[]): string => {
     let total: number = 0;
     for (let { id, price } of products) {
-      let count = cartState.attach(Downgraded).get().find(item => item.id === id)?.count;
+      let count = cartState.find(item => item.id === id)?.count;
       total += count! * price;
     }
     return total.toFixed(2);
@@ -69,8 +66,8 @@ const Header = () => {
         <Popover.Portal>
           <Popover.Content className='search-container' align='start'>
             <input type="search" onInput={ 
-              e => filterState.set({ ...filterState.attach(Downgraded).get(), search: (e.target as HTMLInputElement).value })
-            } value={ filterState.get().search } />
+              e => setFilter({ ...filterState, search: (e.target as HTMLInputElement).value })
+            } value={ filterState.search } />
           </Popover.Content>
         </Popover.Portal>
       </Popover.Root>
@@ -115,10 +112,10 @@ const Header = () => {
             <h2 className="side-bar__heading">
               Cart<Popover.Close aria-label='close'><span aria-hidden="true">✕</span></Popover.Close>
             </h2>
-            { cartState.get().length ? 
+            { cartState.length ? 
               <ul className="side-bar__body">
                 { isLoading ? 
-                  [...Array(cartState.get().length)].map((_, i) => (<CartItemSkeleton key={ i } />)) :
+                  [...Array(cartState.length)].map((_, i) => (<CartItemSkeleton key={ i } />)) :
                   products.map(product => (
                     <CartItem key={ product.id }
                       product={ product } 

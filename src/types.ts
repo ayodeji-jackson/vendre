@@ -2,6 +2,14 @@ export type cartItemType = {
   id: number, count: number
 };
 
+export type filterType = {
+  category: string, 
+  brand: string, 
+  price: string, 
+  range: number[], 
+  search: string
+}
+
 export type ProductType = {
   // brand: string, 
   category: string, 

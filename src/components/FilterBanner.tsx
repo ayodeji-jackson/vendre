@@ -1,16 +1,15 @@
 import './FilterBanner.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import * as Slider from '@radix-ui/react-slider';
 import * as styles from '../assets/styles';
 import Dropdown from './Dropdown';
-import { filterGlobalState } from '../App';
-import { Downgraded, useHookstate } from '@hookstate/core';
 import { ProductType } from '../types';
 import { MinusIcon, PlusIcon } from '../assets/icons';
+import { FilterContext } from '../Contexts';
 
 const FilterBanner = ({ products }: { products: ProductType[] }) => {
   const [ isExpanded, setExpanded ] = useState(false);
-  const filterState = useHookstate(filterGlobalState);
+  const { filterState, setFilter } = useContext(FilterContext);
   const capitalize = (word: string) => {
     return word[0].toUpperCase() + word.slice(1);
   };
@@ -20,7 +19,7 @@ const FilterBanner = ({ products }: { products: ProductType[] }) => {
   // const brands = Array.from(new Set(products.map(({ brand }) => brand)));
 
   useEffect(() => {
-    filterState.set({ ...filterState.attach(Downgraded).get(), range: [minPrice, maxPrice]});
+    setFilter({ ...filterState, range: [minPrice, maxPrice]});
   }, [products]);
   
   return (
@@ -33,20 +32,20 @@ const FilterBanner = ({ products }: { products: ProductType[] }) => {
     </button>
     <div className={ `more-filters overlay ${isExpanded ? '' : 'is-closed'}` }>
       <Dropdown name="Categories" onValueChange={ 
-          value => filterState.set({ ...filterState.attach(Downgraded).get(), category: value }) 
+          value => setFilter({ ...filterState, category: value }) 
         } 
-        value={ filterState.get().category }
+        value={ filterState.category }
         items={ [ { name: 'All', value: '' }, ...categories.map(category => {
           return { name: capitalize(category), value: category }
         }) ]
         } 
       />
       <label className='price-range'>
-        <span>Price range: ${ filterState.get().range[0] }
-        -${ filterState.get().range[1] }</span>
+        <span>Price range: ${ filterState.range[0] }
+        -${ filterState.range[1] }</span>
         <Slider.Root className="range-input" aria-label="price range" 
-          onValueChange={ value => filterState.set({ ...filterState.get(), range: value }) }
-          value={ [filterState.get().range[0], filterState.get().range[1]] }
+          onValueChange={ value => setFilter({ ...filterState, range: value }) }
+          value={ [filterState.range[0], filterState.range[1]] }
           min={ minPrice } max={ maxPrice } step={ 1 } minStepsBetweenThumbs={ 1 }
           defaultValue={[ minPrice, maxPrice ]} style={ styles.sliderRootStyles }
         >
@@ -68,8 +67,8 @@ const FilterBanner = ({ products }: { products: ProductType[] }) => {
       /> */}
     </div>
     <Dropdown name="Sort by price" 
-      value={ filterState.get().price } onValueChange={ 
-        value => filterState.set({ ...filterState.attach(Downgraded).get(), price: value }) 
+      value={ filterState.price } onValueChange={ 
+        value => setFilter({ ...filterState, price: value }) 
       }
       items={ [ { name: "Lowest to highest", value: "asc"}, 
         { name: "Highest to lowest", value: 'desc' } ] 

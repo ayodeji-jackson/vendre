@@ -9,7 +9,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@hookstate/core": "4.0.0-rc21",
     "@radix-ui/react-dropdown-menu": "^1.0.0",
     "@radix-ui/react-popover": "^1.0.0",
     "@radix-ui/react-slider": "^1.0.0",

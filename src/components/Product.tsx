@@ -1,38 +1,39 @@
 import { HeartIcon } from "../assets/icons";
 import { ProductType, cartItemType } from "../types";
 import './Product.css';
-import { Downgraded, useHookstate } from "@hookstate/core";
-import { cartGlobalState, PAGE_URL, wishlistGlobalState } from "../App";
-import { globalFetchError } from "./Page";
+import { PAGE_URL } from "../App";
+import { useContext } from "react";
+import { CartContext, FilterContext, WishlistContext } from "../Contexts";
 
-const Product = ({ product }: { product: ProductType }) => {
-  const wishlistState = useHookstate(wishlistGlobalState);
-  const cartState = useHookstate(cartGlobalState);
-  const fetchError = useHookstate(globalFetchError);
+const Product = ({ product, setFetchError }: 
+  { product: ProductType, setFetchError: React.Dispatch<React.SetStateAction<boolean>> 
+  }) => {
+  const { cartState, setCart } = useContext(CartContext);
+  const { wishlistState, setWishlist } = useContext(WishlistContext)
 
   const cleanCart = (arr: cartItemType[]): cartItemType[] => {
     return [ ...new Map(arr.map(v => [v.id, v])).values() ]
       .filter(item => item.count !== 0);
   };
 
-  const isLiked = wishlistState.get().includes(product.id);
+  const isLiked = wishlistState.includes(product.id);
   const productCartCount = 
-    cartState.get().find(item => item.id == product.id)?.count || 0;
+    cartState.find(item => item.id == product.id)?.count || 0;
 
   const handleLike = (): void => {
     if (!isLiked) 
-      wishlistState.set([ ...wishlistState.attach(Downgraded).get(), product.id ]);
+      setWishlist([ ...wishlistState, product.id ]);
     else 
-      wishlistState.set(wishlistState.attach(Downgraded).get().filter(id => product.id !== id));
+      setWishlist(wishlistState.filter(id => product.id !== id));
   };
 
   const handleAddToCart = (val: number): void => {
     fetch(`${PAGE_URL}/${product.id}`).then(() => 
-      cartState.set(cleanCart([ 
-        ...cartState.attach(Downgraded).get(), { id: product.id, count: productCartCount + val } 
+      setCart(cleanCart([ 
+        ...cartState, { id: product.id, count: productCartCount + val } 
       ]))
     )
-      .catch(err => fetchError.set(true));
+      .catch(err => setFetchError(true));
   };
 
   return (
