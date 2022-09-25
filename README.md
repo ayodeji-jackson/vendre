@@ -30,7 +30,6 @@ e-commerce web app. Bringing the design i found on [dribbble](https://dribbble.c
     <source media="(prefers-color-scheme: dark)" srcset="https://reactrouter.com/favicon-dark.png" />
     <img src="https://reactrouter.com/favicon-dark.png" alt="React router logo" height="32" width="32" />
   </picture>
-  <img src="https://reactrouter.com/favicon.ico" alt="React router logo" height="32" width="32" />
 </a>
 <a href="https://radix-ui.com/" target="_blank" rel="noopener noreferrer">
   <img src="https://radix-ui.com/favicon.svg" alt="Radix UI logo" height="32" width="32" />
